@@ -1,1 +1,1 @@
-git rm --cached Backend/generated/config.py
+Backend/generated/secret.py
