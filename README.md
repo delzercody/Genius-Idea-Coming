@@ -6,3 +6,6 @@ Our app offers users the ability to generate and save 'genius ideas' at the touc
 phase 4 projects
 
 <img src=imgs/TrelloPhase4.png>
+
+# Genius idea wire frame 
+<img src=imgs/Genius_ideas.png>
