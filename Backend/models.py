@@ -1,9 +1,16 @@
 from config.database import db
 from datetime import datetime
+from sqlalchemy_serializer import SerializerMixin
 
 # Category model represents the categories table in the database
-class Category(db.Model):
+
+class Category(db.Model, SerializerMixin):
     __tablename__ = 'categories'
+
+    @classmethod
+    def find(cls, id):
+        category = Category.query.filter(Category.id == id).first()
+        return category
 
     # Primary key column
     id = db.Column(db.Integer, primary_key=True)
@@ -13,7 +20,9 @@ class Category(db.Model):
     description = db.Column(db.String(255), nullable=False)
 
     # Relationship with Idea model (one-to-many)
-    ideas = db.relationship('Idea', back_populates='category')
+    prompts = db.relationship('Prompt', back_populates='category')
+
+    serialize_rules = ('-prompts',)  # Exclude 'ideas' relationship from serialization
 
     def __init__(self, name, description):
         self.name = name
@@ -22,10 +31,14 @@ class Category(db.Model):
     def __repr__(self):
         return f"<Category {self.name}>"
 
-
 # User model represents the users table in the database
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
+
+    @classmethod
+    def find(cls, id):
+        user = User.query.filter(User.id == id).first()
+        return user
 
     # Primary key column
     id = db.Column(db.Integer, primary_key=True)
@@ -49,9 +62,11 @@ class User(db.Model):
     last_name = db.Column(db.String(100)) 
 
     # Relationship with Idea model (one-to-many)
-    ideas = db.relationship('Idea', back_populates='user')
+    prompts = db.relationship('Prompt', back_populates='user')
     # Relationship with User_Idea model (one-to-many)
     user_ideas = db.relationship('User_Idea', back_populates='user')
+
+    serialize_rules = ('-prompts.user', '-user_ideas.user')  # Exclude 'ideas' and 'user_ideas' relationships from serialization
 
     def __init__(self, username, password, email, first_name, last_name, bio=None, location=None):
         self.username = username
@@ -65,47 +80,56 @@ class User(db.Model):
     def __repr__(self):
         return f"<User {self.username}>"
 
-# Idea model represents the ideas table in the database
-class Idea(db.Model):
-    __tablename__ = 'ideas'
+# Prompt model represents the prompts table in the database
+class Prompt(db.Model, SerializerMixin):
+    __tablename__ = 'prompts'
+
+    @classmethod
+    def find(cls, id):
+        prompt = Prompt.query.filter(Prompt.id == id).first()
+        return prompt
 
     # Primary key column
     id = db.Column(db.Integer, primary_key=True)
     # Foreign key column referencing the categories table
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-    # Title of the idea
+    # Title of the prompt
     title = db.Column(db.String(100), nullable=False)
-    # Description of the idea
+    # Description of the prompt
     description = db.Column(db.Text, nullable=False)
-    # Foreign key column referencing the users table
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     # Relationship with User model (many-to-one)
-    user = db.relationship('User', back_populates='ideas')
+    user = db.relationship('User', back_populates='prompts')
     # Relationship with Category model (many-to-one)
-    category = db.relationship('Category', back_populates='ideas')
+    category = db.relationship('Category', back_populates='prompts')
     # Relationship with User_Idea model (one-to-many)
-    user_ideas = db.relationship('User_Idea', back_populates='idea')
+    user_ideas = db.relationship('User_Idea', back_populates='prompt')
 
-    def __init__(self, user_id, category_id, title, description):
-        self.user_id = user_id
+    serialize_rules = ('-user.prompts', '-user_ideas.prompt')  # Exclude 'user' and 'user_ideas' relationships from serialization
+
+    def __init__(self, category_id, title, description):
         self.category_id = category_id
         self.title = title
         self.description = description
 
     def __repr__(self):
-        return f"<Idea {self.title}>"
+        return f"<Prompt {self.title}>"
 
 # User_Idea model represents the user_ideas table in the database
-class User_Idea(db.Model):
+class User_Idea(db.Model, SerializerMixin):
     __tablename__ = 'user_ideas'
+
+    @classmethod
+    def find(cls, id):
+        user_idea = User_Idea.query.filter(User_Idea.id == id).first()
+        return user_idea
 
     # Primary key column
     id = db.Column(db.Integer, primary_key=True)
     # Foreign key column referencing the users table
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # Foreign key column referencing the ideas table
-    idea_id = db.Column(db.Integer, db.ForeignKey('ideas.id'), nullable=False)
+    # Foreign key column referencing the prompts table
+    prompt_id = db.Column(db.Integer, db.ForeignKey('prompts.id'), nullable=False)
     # Flag indicating whether the idea is saved
     is_saved = db.Column(db.Boolean, default=False)
     # Flag indicating whether the idea is created
@@ -116,17 +140,19 @@ class User_Idea(db.Model):
     notes = db.Column(db.String(255))
 
     # Relationship with User model (many-to-one)
-    user = db.relationship('User', back_populates='user_ideas', foreign_keys=[user_id])
-    # Relationship with Idea model (many-to-one)
-    idea = db.relationship('Idea', back_populates='user_ideas', foreign_keys=[idea_id])
+    user = db.relationship('User', back_populates='user_ideas')
+    # Relationship with Prompt model (many-to-one)
+    prompt = db.relationship('Prompt', back_populates='user_ideas')
 
-    def __init__(self, user, idea, notes=None):
-        self.user = user
-        self.idea = idea
+    serialize_rules = ('-user.user_ideas', '-prompt.user_ideas')
+
+    def __init__(self, user_id, prompt_id, notes=None):
+        self.user_id = user_id
+        self.prompt_id = prompt_id
         self.notes = notes
 
     def __repr__(self):
-        return f"SavedIdea(id={self.id}, user_id={self.user_id}, idea_id={self.idea_id}, saved_at={self.saved_at})"
+        return f"SavedPrompt(id={self.id}, user_id={self.user_id}, prompt_id={self.prompt_id}, saved_at={self.saved_at})"
 
 
 
