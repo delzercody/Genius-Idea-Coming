@@ -1,16 +1,19 @@
+import "../stylesheets/NavBar.css"
+
 function NavBar () {
 
 return (
-    <header>
-        <h1 class="page-title">Genius Ideas</h1>
+    <div className="nav-bar">
+        <h1 className="page-title">Genius Ideas</h1>
         <input
+            className="search-input"
             placeholder="Search"
             type="text">
         </input>
-        <button>
+        <button className="login-button">
             Login
         </button>
-    </header>
+    </div>
 )
 };
 

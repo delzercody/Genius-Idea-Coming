@@ -1,0 +1,37 @@
+.home-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: black;
+    height: 25vh;
+    text-align: center;
+}
+
+.home-body{
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    padding: 10px;
+}
+
+input{
+    width: 20vw
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
+    width: 50vw;
+    height: 50vh;
+    padding: 5px;
+}
+
+.description{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 50vh
+    padding 5px;
+}
