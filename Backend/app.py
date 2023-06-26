@@ -28,6 +28,7 @@ class Users(Resource):
         users = [user.to_dict() for user in User.query.all()]
         response = make_response(users, 200)
         return response
+    
 api.add_resource(Users, '/users')
 
 if __name__ == '__main__':

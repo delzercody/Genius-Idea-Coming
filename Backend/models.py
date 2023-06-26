@@ -1,6 +1,7 @@
 from config.database import db
 from datetime import datetime
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.ext.associationproxy import association_proxy
 
 # Category model represents the categories table in the database
 
@@ -21,12 +22,13 @@ class Category(db.Model, SerializerMixin):
 
     # Relationship with Idea model (one-to-many)
     prompts = db.relationship('Prompt', back_populates='category')
+    users = association_proxy( 'prompts', 'user' )
 
-    serialize_rules = ('-prompts',)  # Exclude 'ideas' relationship from serialization
+    serialize_rules = ('-prompts.category',)  # Exclude 'ideas' relationship from serialization
 
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
+    # def __init__(self, name, description):
+    #     self.name = name
+    #     self.description = description
 
     def __repr__(self):
         return f"<Category {self.name}>"
@@ -53,7 +55,7 @@ class User(db.Model, SerializerMixin):
     # Updated at timestamp
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # User's bio
-    bio = db.Column(db.Text)
+    bio = db.Column(db.String)
     # User's location
     location = db.Column(db.String(100))
     # User's first name
@@ -65,17 +67,20 @@ class User(db.Model, SerializerMixin):
     prompts = db.relationship('Prompt', back_populates='user')
     # Relationship with User_Idea model (one-to-many)
     user_ideas = db.relationship('User_Idea', back_populates='user')
+    
+    categories = association_proxy( 'prompts', 'categories' )
+    # prompts = association_proxy( 'user_ideas', 'prompt' )
 
     serialize_rules = ('-prompts.user', '-user_ideas.user')  # Exclude 'ideas' and 'user_ideas' relationships from serialization
 
-    def __init__(self, username, password, email, first_name, last_name, bio=None, location=None):
-        self.username = username
-        self.password = password
-        self.email = email
-        self.first_name = first_name 
-        self.last_name = last_name 
-        self.bio = bio
-        self.location = location
+    # def __init__(self, username, password, email, first_name, last_name, bio=None, location=None):
+    #     self.username = username
+    #     self.password = password
+    #     self.email = email
+    #     self.first_name = first_name 
+    #     self.last_name = last_name 
+    #     self.bio = bio
+    #     self.location = location
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -98,6 +103,8 @@ class Prompt(db.Model, SerializerMixin):
     # Description of the prompt
     description = db.Column(db.Text, nullable=False)
 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False )
+
     # Relationship with User model (many-to-one)
     user = db.relationship('User', back_populates='prompts')
     # Relationship with Category model (many-to-one)
@@ -105,12 +112,14 @@ class Prompt(db.Model, SerializerMixin):
     # Relationship with User_Idea model (one-to-many)
     user_ideas = db.relationship('User_Idea', back_populates='prompt')
 
+    
+
     serialize_rules = ('-user.prompts', '-user_ideas.prompt')  # Exclude 'user' and 'user_ideas' relationships from serialization
 
-    def __init__(self, category_id, title, description):
-        self.category_id = category_id
-        self.title = title
-        self.description = description
+    # def __init__(self, category_id, title, description):
+    #     self.category_id = category_id
+    #     self.title = title
+    #     self.description = description
 
     def __repr__(self):
         return f"<Prompt {self.title}>"
@@ -140,20 +149,19 @@ class User_Idea(db.Model, SerializerMixin):
     notes = db.Column(db.String(255))
 
     # Relationship with User model (many-to-one)
-    user = db.relationship('User', back_populates='user_ideas', foreign_keys=[user_id])
+    user = db.relationship('User', back_populates='user_ideas')
     # Relationship with Prompt model (many-to-one)
-    prompt = db.relationship('Prompt', back_populates='user_ideas', foreign_keys=[prompt_id])
+    prompt = db.relationship('Prompt', back_populates='user_ideas')
 
     serialize_rules = ('-user.user_ideas', '-prompt.user_ideas')
 
-    def __init__(self, user_id, prompt_id, notes=None):
-        self.user_id = user_id
-        self.prompt_id = prompt_id
-        self.notes = notes
+    # def __init__(self, user_id, prompt_id, notes=None):
+    #     self.user_id = user_id
+    #     self.prompt_id = prompt_id
+    #     self.notes = notes
 
     def __repr__(self):
         return f"SavedPrompt(id={self.id}, user_id={self.user_id}, prompt_id={self.prompt_id}, saved_at={self.saved_at})"
-
 
 
 
