@@ -140,9 +140,9 @@ class User_Idea(db.Model, SerializerMixin):
     notes = db.Column(db.String(255))
 
     # Relationship with User model (many-to-one)
-    user = db.relationship('User', back_populates='user_ideas')
+    user = db.relationship('User', back_populates='user_ideas', foreign_keys=[user_id])
     # Relationship with Prompt model (many-to-one)
-    prompt = db.relationship('Prompt', back_populates='user_ideas')
+    prompt = db.relationship('Prompt', back_populates='user_ideas', foreign_keys=[prompt_id])
 
     serialize_rules = ('-user.user_ideas', '-prompt.user_ideas')
 
