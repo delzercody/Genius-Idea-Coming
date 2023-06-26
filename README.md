@@ -7,8 +7,18 @@ Our app offers users the ability to generate and save 'genius ideas' at the touc
 ## Genius idea wire frame 
 <img src=imgs/Genius_ideas.png>
 
-
 ## API Routes
+| API Route  	| Request<br>Method 	| Body                                                            	| Response                                                            	|
+|------------	|-------------------	|-----------------------------------------------------------------	|---------------------------------------------------------------------	|
+| /form     	| POST              	| {id, title, description, comments, category_id}             	    | {id, title, description,  comments, category_id}                  	|
+| /collection   | GET               	| {id, title, description, comments, category_id}                 	| [{...}]                                                           	|
+| /collection/:id| PATCH              	| {id, title, description, comments, category_id} 	                | {id, title, description, comments, category_id}                     	|
+| /collection/:id| DELETE              	| {id, title, description, comments, category_id} 	                | {id, title, description, comments, category_id}                     	|
+| /login 	    | GET                	| {username, name}                                                 	| {username, name}                                                  	|
+| /profile/:id 	| Patch             	|                                                                   	| {name, location}                                                     	|
+
+
+## Client Side Routes
 | API Route           	| Component        	|
 |---------------------	|------------------	|
 | /home                 | Home.js           |
