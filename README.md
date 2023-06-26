@@ -22,5 +22,8 @@ Our app offers users the ability to generate and save 'genius ideas' at the touc
 ## React tree
 <img src= imgs/Reacttree.png>
 
+## Schema
+<img src= imgs/Tables.png>
+
 ## Genius Trello
 <img src=imgs/TrelloPhase4.png>
