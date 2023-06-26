@@ -11,13 +11,14 @@ import Ideas from './components/Ideas'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/Form' element={<Form />} />
-      <Route path='/Category/:ocassion' element={<Category />} />
-      <Route path='/Profile/:id' element={<Profile />} />
-      <Route path='/Ideas/:id' element={<Ideas />} />
-    </Routes>
-  </BrowserRouter>
+  <App />
+    // <BrowserRouter>
+    //     <Routes>
+    //       <Route path='/' element={<App/>} />
+    //       <Route path='/Form' element={<Form />} />
+    //       <Route path='/Category/:ocassion' element={<Category />} />
+    //       <Route path='/Profile/:id' element={<Profile />} />
+    //       <Route path='/Ideas/:id' element={<Ideas />} />
+    //     </Routes>
+    //   </BrowserRouter>
 )
