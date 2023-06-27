@@ -29,7 +29,7 @@ class Category(db.Model, SerializerMixin):
     prompts = db.relationship('Prompt', back_populates='category', cascade = 'all, delete-orphan')
     users = association_proxy( 'prompts', 'user' )
 
-    serialize_rules = ('-prompts.category',)  # Exclude 'ideas' relationship from serialization
+    serialize_rules = ('-prompts.category', '-prompts.user')  # Exclude 'prompts' and 'user' relationships from serialization
 
 ############ validations for Category ##############
     # Name must be a string in between 1 - 50 characters
@@ -93,7 +93,14 @@ class User(db.Model, SerializerMixin):
     categories = association_proxy( 'prompts', 'categories' )
     # prompts = association_proxy( 'user_ideas', 'prompt' )
 
-    serialize_rules = ('-prompts.user', '-user_ideas.user')  # Exclude 'ideas' and 'user_ideas' relationships from serialization
+    serialize_rules = (
+        '-prompts.user',
+        '-user_ideas.user',
+        '-password',
+        '-created_at'
+        )  
+    # Exclude 'ideas' and 'user_ideas' relationships from serialization
+    #also exclude password and created_at from displaying
 
 ############ validations for User ##############
     # Username is a unique string between 5-15 characters w/ no special characters
@@ -198,10 +205,20 @@ class Prompt(db.Model, SerializerMixin):
     # Relationship with User_Idea model (one-to-many)
     user_ideas = db.relationship('User_Idea', back_populates='prompt', cascade = 'all, delete-orphan')
 
+
+    
+
+    serialize_rules = (
+        '-user.prompts',
+        '-user_ideas.prompt'
+        )  
+    # Exclude 'user' and 'user_ideas' relationships from serialization
+    
+
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())    
 
-    serialize_rules = ('-user.prompts', '-user_ideas.prompt' )  # Exclude 'user' and 'user_ideas' relationships from serialization
+    
 
 ############ validations for Prompt ##############
     #checking if user and category exists
@@ -229,6 +246,7 @@ class Prompt(db.Model, SerializerMixin):
         if type(description) is str and len(description) < 10000 :
             return description
         else: ValueError( "Description cannot exceed 10,000 characters.")
+
 
     # def __init__(self, category_id, title, description):
     #     self.category_id = category_id
