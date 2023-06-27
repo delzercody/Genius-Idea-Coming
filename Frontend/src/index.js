@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import App from './components/App'
 import Home from './components/Home'
-import Form from './components/Form'
+import Form from './components/IdeaForm'
 import Category from './components/Category'
 import Profile from './components/Profile'
 import Ideas from './components/Ideas'
@@ -14,7 +14,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/Form" element={<Form />} />
+      <Route path="/IdeaForm" element={<Form />} />
       <Route path="/Category/:ocassion" element={<Category />} />
       <Route path="/Profile/:id" element={<Profile />} />
       <Route path="/Ideas/:id" element={<Ideas />} />
