@@ -1,10 +1,14 @@
+from flask import Flask, request, jsonify
 import openai
 from secret import API_KEY
 
 openai.api_key = API_KEY
 
+app = Flask(__name__)
 
-def generate_idea(input_word):
+@app.route('/api/generate-idea', methods=['POST'])
+def generate_idea():
+    input_word = request.json['inputWord']
     prompt = f"Generate a genius idea using the word '{input_word}'."
     response = openai.Completion.create(
         engine='text-davinci-003',
@@ -15,11 +19,7 @@ def generate_idea(input_word):
         temperature=0.7
     )
     idea = response.choices[0].text.strip()
-    return idea
+    return jsonify({'generatedIdea': idea})
 
-
-user_input = input("Enter a word: ")
-
-
-generated_idea = generate_idea(user_input)
-print(generated_idea)
+if __name__ == '__main__':
+    app.run()
