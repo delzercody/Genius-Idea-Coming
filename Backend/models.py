@@ -24,7 +24,7 @@ class Category(db.Model, SerializerMixin):
     prompts = db.relationship('Prompt', back_populates='category', cascade = 'all, delete-orphan')
     users = association_proxy( 'prompts', 'user' )
 
-    serialize_rules = ('-prompts.category',)  # Exclude 'ideas' relationship from serialization
+    serialize_rules = ('-prompts.category', '-prompts.user')  # Exclude 'prompts' and 'user' relationships from serialization
 
     # def __init__(self, name, description):
     #     self.name = name
@@ -71,7 +71,14 @@ class User(db.Model, SerializerMixin):
     categories = association_proxy( 'prompts', 'categories' )
     # prompts = association_proxy( 'user_ideas', 'prompt' )
 
-    serialize_rules = ('-prompts.user', '-user_ideas.user')  # Exclude 'ideas' and 'user_ideas' relationships from serialization
+    serialize_rules = (
+        '-prompts.user',
+        '-user_ideas.user',
+        '-password',
+        '-created_at'
+        )  
+    # Exclude 'ideas' and 'user_ideas' relationships from serialization
+    #also exclude password and created_at from displaying
 
     # def __init__(self, username, password, email, first_name, last_name, bio=None, location=None):
     #     self.username = username
@@ -114,7 +121,12 @@ class Prompt(db.Model, SerializerMixin):
 
     
 
-    serialize_rules = ('-user.prompts', '-user_ideas.prompt')  # Exclude 'user' and 'user_ideas' relationships from serialization
+    serialize_rules = (
+        '-user.prompts',
+        '-user_ideas.prompt'
+        )  
+    # Exclude 'user' and 'user_ideas' relationships from serialization
+    
 
     # def __init__(self, category_id, title, description):
     #     self.category_id = category_id
