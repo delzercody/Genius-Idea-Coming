@@ -17,3 +17,18 @@
 .bar {
     border-top: 10px solid black
 }
+
+.circle-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-left: 65px;
+  }
+  
+.profile-name {
+    text-align: center;
+}
+
+.profile-bio {
+    text-align: center;
+}

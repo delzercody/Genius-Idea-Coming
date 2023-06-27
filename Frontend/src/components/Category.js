@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import Sidebar from "./Sidebar";
-import NavBar from "./NavBar";
+import { useState } from 'react'
+import Sidebar from "./Sidebar"
+import NavBar from "./NavBar"
 import {Link} from 'react-router-dom'
-import '../stylesheets/Category.css';
+import '../stylesheets/Category.css'
 
 function Category() {
   const [cards, setCards] = useState([]);
@@ -33,7 +33,7 @@ function Category() {
             </button>
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
-          <Link to="/Form" className="btn btn-secondary">Create an Idea</Link>
+          <Link to="/IdeaForm" className="btn btn-secondary">Create an Idea</Link>
           </div>
         </div>
         <div className="row mt-4">
