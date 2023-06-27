@@ -21,7 +21,7 @@ class Category(db.Model, SerializerMixin):
     description = db.Column(db.String(255), nullable=False)
 
     # Relationship with Idea model (one-to-many)
-    prompts = db.relationship('Prompt', back_populates='category')
+    prompts = db.relationship('Prompt', back_populates='category', cascade = 'all, delete-orphan')
     users = association_proxy( 'prompts', 'user' )
 
     serialize_rules = ('-prompts.category',)  # Exclude 'ideas' relationship from serialization
@@ -64,9 +64,9 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String(100)) 
 
     # Relationship with Idea model (one-to-many)
-    prompts = db.relationship('Prompt', back_populates='user')
+    prompts = db.relationship('Prompt', back_populates='user', cascade = 'all, delete-orphan')
     # Relationship with User_Idea model (one-to-many)
-    user_ideas = db.relationship('User_Idea', back_populates='user')
+    user_ideas = db.relationship('User_Idea', back_populates='user', cascade = 'all, delete-orphan')
     
     categories = association_proxy( 'prompts', 'categories' )
     # prompts = association_proxy( 'user_ideas', 'prompt' )
@@ -108,9 +108,9 @@ class Prompt(db.Model, SerializerMixin):
     # Relationship with User model (many-to-one)
     user = db.relationship('User', back_populates='prompts')
     # Relationship with Category model (many-to-one)
-    category = db.relationship('Category', back_populates='prompts')
+    category = db.relationship('Category', back_populates='prompts',)
     # Relationship with User_Idea model (one-to-many)
-    user_ideas = db.relationship('User_Idea', back_populates='prompt')
+    user_ideas = db.relationship('User_Idea', back_populates='prompt', cascade = 'all, delete-orphan')
 
     
 
