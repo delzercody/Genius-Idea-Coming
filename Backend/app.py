@@ -1,13 +1,15 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, session
 from flask_migrate import Migrate
 from flask_cors import CORS
-from flask_restful import Api, Resource
+from flask_restful import Api, Resource, abort
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from config.database import db
 from config.config import SQLALCHEMY_DATABASE_URI
 from models import Category, Prompt, User, User_Idea
 from routes import *
+from werkzeug.exceptions import NotFound, UnprocessableEntity, Unauthorized
+
 
 
 app = Flask(__name__)
@@ -22,6 +24,53 @@ migrate = Migrate(app, db)
 @app.route('/')
 def hello():
     return 'Hello Flask!'
+
+############# Login/Signup ################
+@app.route('/logout', methods=["GET"])
+def logout():
+    session['user_id'] = None 
+    return make_response('' , 204)
+
+@app.route('/authorized-session', methods=["GET"])
+def authorize():
+    try:
+        user = User.query.filter_by(id=session.get('user_id')).first()
+        return make_response(user.to_dict(), 200)
+    except: 
+        raise Unauthorized("invalid credentials")
+
+class Signup( Resource ):
+    def post(self):
+        rq = request.get_json()
+        new_user = User(
+            username = rq.get('username'),
+            first_name = rq.get('first_name'),
+            last_name = rq.get('last_name'), 
+            email = rq.get('email'),
+            location = rq.get('location'),
+            bio = rq.get('bio'), 
+            avatar = rq.get('avatar'), 
+            )
+        new_user.password_hash = rq.get('password')
+        db.session.add(new_user)
+        db.session.commit()
+        session['user_id'] = new_user.id
+        return make_response(new_user.to_dict(rules = ('-_password_hash', )), 201)
+    
+api.add_resource(Signup, '/signup')
+
+class Login(Resource):
+    def post(self):
+        try:
+            rq = request.get_json()
+            user = User.query.filter_by(username = rq.get('username')).first()
+            if user.authenticate(rq.get('password')):
+                session['user_id'] = user.id 
+                return make_response(user.to_dict(), 200)
+        except:
+            abort(401, "Unauthorized")
+
+api.add_resource(Login, '/login')            
 
 class Users(Resource):
     def get(self):
