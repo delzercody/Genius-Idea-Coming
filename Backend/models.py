@@ -230,7 +230,6 @@ class Prompt(db.Model, SerializerMixin):
             return description
         else: ValueError( "Description cannot exceed 10,000 characters.")
 
-
     # def __init__(self, category_id, title, description):
     #     self.category_id = category_id
     #     self.title = title
