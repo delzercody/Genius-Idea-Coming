@@ -1,4 +1,6 @@
-from flask import Flask, request, make_response
+import logging
+import sys
+from flask import Flask, request, make_response, jsonify
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api, Resource
@@ -8,6 +10,8 @@ from config.database import db
 from config.config import SQLALCHEMY_DATABASE_URI
 from models import Category, Prompt, User, User_Idea
 from routes import *
+import openai
+from generated.secret import API_KEY
 
 
 app = Flask(__name__)
@@ -16,8 +20,22 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = True
 db.init_app(app)
 
+
 api = Api(app)
 migrate = Migrate(app, db)
+
+CORS(app)
+
+openai.api_key = API_KEY
+
+logging.basicConfig(
+    level=logging.ERROR,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)  # Output logs to the console
+        # logging.FileHandler('error.log')  # Output logs to a file
+    ]
+)
 
 @app.route('/')
 def hello():
@@ -162,5 +180,45 @@ class UserIdeasByID( Resource ):
             return response
 api.add_resource( UserIdeasByID, '/user-ideas/<int:id>' )
 
+def generate_idea(input_word):
+    try:
+        prompt = f"Generate a genius idea using the word '{input_word}'."
+        response = openai.Completion.create(
+            engine='text-davinci-003',
+            prompt=prompt,
+            max_tokens=50,
+            n=1,
+            stop=None,
+            temperature=0.7
+        )
+        idea = response.choices[0].text.strip()
+        return idea
+    except Exception as e:
+        # Log the exception
+        logging.error('An error occurred while generating the idea: %s', str(e))
+        raise
+
+# Define the API route for generating ideas
+@app.route('/api/generate-idea', methods=['POST'])
+def generate_idea_route():
+    try:
+        input_word = request.json.get('inputWord')
+        if not input_word:
+            return jsonify({'error': 'Input word is missing'}), 400
+
+        # Generate the idea using the input word
+        generated_idea = generate_idea(input_word)
+
+        return jsonify({'generatedIdea': generated_idea}), 200
+
+    except Exception as e:
+        # Log the exception
+        logging.error('An error occurred while processing the request: %s', str(e))
+
+        # Handle the error and return an appropriate response to the client
+        # ...
+
+# Add resource routes and other necessary code
+
 if __name__ == '__main__':
-    app.run (debug=True)
+    app.run(host='localhost', port=5000, debug=True, use_reloader=False)
