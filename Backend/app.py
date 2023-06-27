@@ -15,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = True
 db.init_app(app)
+CORS(app)
 
 api = Api(app)
 migrate = Migrate(app, db)
@@ -28,7 +29,7 @@ class Users(Resource):
         users = [user.to_dict() for user in User.query.all()]
         response = make_response(users, 200)
         return response
-    
+
 api.add_resource(Users, '/users')
 
 class Prompts( Resource ):
@@ -65,7 +66,7 @@ class PromptByID( Resource ):
         except:
             response = make_response( {"error": "prompt not found"}, 404 )
             return response
-    
+
     def patch( self, id ):
         prompt = Prompt.find(id)
         if not prompt:
@@ -80,11 +81,11 @@ class PromptByID( Resource ):
             prompt_dict = prompt.to_dict( only = ( 'id', 'title', 'description', ) )
             response = make_response( prompt_dict, 200 )
             return response
-        
+
         except:
             response = make_response( {"errors": ["validation errors"]}, 400)
             return response
-        
+
     def delete( self, id ):
         prompt = Prompt.find(id)
         try:
@@ -130,7 +131,7 @@ class UserIdeasByID( Resource ):
         except:
             response = make_response( {"error": "prompt not found"}, 404 )
             return response
-    
+
     def patch( self, id ):
         user_idea = User_Idea.find(id)
         if not user_idea:
@@ -149,7 +150,7 @@ class UserIdeasByID( Resource ):
         except:
             response = make_response( {"errors": ["validation errors"]}, 400)
             return response
-        
+
     def delete( self, id ):
         user_idea = User_Idea.find(id)
         try:

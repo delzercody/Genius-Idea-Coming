@@ -1,37 +1,26 @@
 .home-title {
+    background-color: #6a99ae;
+    text-align: center;
+    color: white;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    background-color: black;
+    justify-content: space-between;
     height: 25vh;
-    text-align: center;
+    padding: 10px;
 }
 
 .home-body{
+    background-color: #4de4ba;
     display: flex;
     justify-content: space-evenly;
-    align-content: center;
+    margin: 10px;
     padding: 10px;
+}
+
+.category-container{
+    background-color: #9fc0cf;
 }
 
 input{
     width: 20vw
-}
-
-.login-form{
-    display: flex;
-    flex-direction: column;
-    background-color: grey;
-    width: 50vw;
-    height: 50vh;
-    padding: 5px;
-}
-
-.description{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    width: 50vw;
-    height: 50vh
-    padding 5px;
 }

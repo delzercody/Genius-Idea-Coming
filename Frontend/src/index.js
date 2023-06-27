@@ -8,6 +8,7 @@ import Form from './components/IdeaForm'
 import Category from './components/Category'
 import Profile from './components/Profile'
 import Ideas from './components/Ideas'
+import Login from './components/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
       <Route path="/Category/:ocassion" element={<Category />} />
       <Route path="/Profile/:id" element={<Profile />} />
       <Route path="/Ideas/:id" element={<Ideas />} />
+      <Route path="/Login" element={<Login />} />
     </Routes>
   </BrowserRouter>
 )

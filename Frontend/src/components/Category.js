@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Sidebar from "./Sidebar"
 import NavBar from "./NavBar"
 import {Link} from 'react-router-dom'
@@ -6,7 +6,6 @@ import '../stylesheets/Category.css'
 
 function Category() {
   const [cards, setCards] = useState([]);
-
   const generateIdea = () => {
     const newCard = {
       id: cards.length + 1,

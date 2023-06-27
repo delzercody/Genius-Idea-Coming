@@ -1,6 +1,21 @@
+import '../stylesheets/login.css'
+import NavBar from './NavBar'
+
 function Login() {
   return (
-    <div>Login</div>
+    <>
+      <NavBar />
+      <div className='login-body'>
+        <div>
+          <form className='login-form'>
+            <label>Username:</label>
+            <input type='text'></input>
+            <label>Password:</label>
+            <input type='text'></input>
+          </form>
+        </div>
+      </div>
+    </>
   )
 }
 

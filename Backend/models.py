@@ -112,7 +112,7 @@ class Prompt(db.Model, SerializerMixin):
     # Relationship with User_Idea model (one-to-many)
     user_ideas = db.relationship('User_Idea', back_populates='prompt', cascade = 'all, delete-orphan')
 
-    
+
 
     serialize_rules = ('-user.prompts', '-user_ideas.prompt')  # Exclude 'user' and 'user_ideas' relationships from serialization
 
