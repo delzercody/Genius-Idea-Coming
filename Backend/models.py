@@ -144,10 +144,9 @@ class User(db.Model, SerializerMixin):
     @validates( 'avatar' )
     def validates_avatar( self, key, avatar ):
         file_format = [ 'jpeg', 'png', 'jpg', 'gif' ]
-        if avatar is not None:
-            if avatar not in file_format:
-                raise ValueError("Only JPEG/PNG/GIF images are permitted.")
-        return avatar
+        if isinstance(avatar, str) and any(format_str in avatar for format_str in file_format):
+            return avatar
+        else: raise ValueError("Only JPEG/PNG/GIF images are permitted.")
 
 
 ########### Password hashing #################
