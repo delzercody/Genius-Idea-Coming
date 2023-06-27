@@ -105,12 +105,13 @@ class Users(Resource):
         try:
             new_user = User(
                 username=rq['username'],
-                password=rq['password'],
+                _password_hash=rq['_password_hash'],
                 email=rq['email'],
                 bio=rq['bio'],
                 location=rq['location'],
                 first_name=rq['first_name'],
-                last_name=rq['last_name']
+                last_name=rq['last_name'],
+                avatar = rq['avatar']
             )
             # Add the new user to the session and commit the changes to the database
             db.session.add(new_user)
@@ -203,7 +204,7 @@ class CategoryByID(Resource):
         category = Category.query.get(category_id)
         if category is not None:
             # Convert the category object to a dictionary and return it as a response
-            category_dict = category.to_dict()
+            category_dict = category.to_dict(only = ( 'name','description', ))
             response = make_response(category_dict, 200)
             return response
         else:
@@ -232,18 +233,18 @@ class CategoryByID(Resource):
             response = make_response({"error": "validation errors"}, 400)
             return response
 
-    def delete(self, category_id):
-        # Retrieve the specific category to be deleted based on the provided category_id
-        category = Category.query.get(category_id)
-        try:
-            # Delete the category from the session and commit the changes to the database
-            db.session.delete(category)
-            db.session.commit()
-            response = make_response('Category deleted successfully', 204)
-            return response
-        except:
-            response = make_response({"error": "Category not found"}, 404)
-            return response
+    # def delete(self, category_id):
+    #     # Retrieve the specific category to be deleted based on the provided category_id
+    #     category = Category.query.get(category_id)
+    #     try:
+    #         # Delete the category from the session and commit the changes to the database
+    #         db.session.delete(category)
+    #         db.session.commit()
+    #         response = make_response('Category deleted successfully', 204)
+    #         return response
+    #     except:
+    #         response = make_response({"error": "Category not found"}, 404)
+    #         return response
 
 # Registering the resource classes with their respective routes
 
