@@ -20,6 +20,9 @@ function Sidebar() {
           <Link className='sidebar-link' to="/IdeaForm">Form</Link>
         </h5>
         <h5 className="list">
+          <Link className='sidebar-link' to="/IdeaGenerator">IdeaGenerator</Link>
+        </h5>
+        <h5 className="list">
           <Link className='sidebar-link' to="/Category/cooking">Cooking</Link>
         </h5>
         <h5 className="list">
