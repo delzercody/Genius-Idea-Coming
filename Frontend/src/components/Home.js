@@ -11,7 +11,7 @@ function Home() {
   }, []);
 
   function getCategories () {
-    fetch ("http://127.0.0.1:5000/prompts")
+    fetch ("http://127.0.0.1:5000/categories")
     .then(res => res.json())
     .then(res => {
       setCategories(res)
@@ -21,7 +21,8 @@ function Home() {
 
   const categoryDisplay = categories.map(category => {
     return (
-      <CategoryCard 
+      <CategoryCard
+        key={category.id}
         name={category.name}
         description={category.description}
       />
@@ -39,8 +40,8 @@ function Home() {
         <h4>anything else we want to include</h4>
       </div>
       <div className="home-body">
+        <h3>Idea Categories</h3>
         <div className='category-container'>
-          <h3>Idea Categories</h3>
           {categoryDisplay}
         </div>
       </div>

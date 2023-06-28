@@ -320,6 +320,13 @@ class PromptByID( Resource ):
             return response
 api.add_resource( PromptByID, '/prompts/<int:id>' )
 
+class PromptByCategoryId (Resource):
+    def get(self, id):
+        prompts = [ prompt.to_dict(only=('category',)) for prompt in Prompt.query.filter_by(category_id=id) ]
+        response = make_response( prompts, 200 )
+        return response
+api.add_resource( PromptByCategoryId, '/promptbycategory/<int:id>')
+
 class UserIdeas( Resource ):
     def get(self):
         user_ideas = [ ui.to_dict() for ui in User_Idea.query.all() ]
