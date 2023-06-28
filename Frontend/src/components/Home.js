@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import NavBar from "./NavBar";
 import '../stylesheets/home.css';
 import CategoryCard from './CategoryCard';
+import Login from './Login'
+
 
 function Home() {
   const [categories, setCategories] = useState([]);
