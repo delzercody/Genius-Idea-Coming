@@ -22,12 +22,19 @@
     padding: 10px;
 }
 
-.category-container{
-    background-color: #9fc0cf;
-    display: flex;
-    justify-content: space-evenly;
+.category-container {
+  background-color: #9fc0cf;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
+
+
 
 input{
     width: 20vw
+}
+
+.home_cards {
+    min-width: 500px !important;
 }

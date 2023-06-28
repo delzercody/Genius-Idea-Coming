@@ -1,6 +1,7 @@
 .card{
     height: 25vh;
     width: 15vw;
+    min-width: 300px
 }
 
 .card-body{

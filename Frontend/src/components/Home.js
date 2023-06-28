@@ -6,27 +6,30 @@ import CategoryCard from './CategoryCard';
 function Home() {
   const [categories, setCategories] = useState([]);
 
-  useEffect (() => {
+  useEffect(() => {
     getCategories()
   }, []);
 
-  function getCategories () {
-    fetch ("http://127.0.0.1:5000/categories")
-    .then(res => res.json())
-    .then(res => {
-      setCategories(res)
-    })
-    .catch(error => alert(error));
+  function getCategories() {
+    fetch("http://127.0.0.1:5000/categories")
+      .then(res => res.json())
+      .then(res => {
+        setCategories(res)
+      })
+      .catch(error => alert(error));
   }
 
   const categoryDisplay = categories.map(category => {
     return (
+
+      <div className="col-md-3 col-sm-4 col-xl-2 home_cards" key={category.name}>
       <CategoryCard
         self={category}
         key={category.name}
         name={category.name}
         description={category.description}
       />
+      </div>
     )
   })
 
@@ -42,7 +45,7 @@ function Home() {
       </div>
       <div className="home-body">
         <h3>Idea Categories</h3>
-        <div className='category-container'>
+        <div className="row justify-content-md-center">
           {categoryDisplay}
         </div>
       </div>
@@ -50,7 +53,8 @@ function Home() {
   )
 }
 
-export default Home;
+export default Home
+
 
 
 //eric's thing
