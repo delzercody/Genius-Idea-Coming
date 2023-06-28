@@ -21,11 +21,14 @@ function Home() {
 
   const categoryDisplay = categories.map(category => {
     return (
+
       <div className="col-md-3 col-sm-4 col-xl-2 home_cards" key={category.name}>
-        <CategoryCard
-          name={category.name}
-          description={category.description}
-        />
+      <CategoryCard
+        self={category}
+        key={category.name}
+        name={category.name}
+        description={category.description}
+      />
       </div>
     )
   })
