@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
 import Sidebar from "./Sidebar"
 import NavBar from "./NavBar"
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../stylesheets/Category.css'
 import CategoryCard from './CategoryCard'
+import { useLocation } from "react-router-dom";
 
 function Category() {
+  const location = useLocation();
+  const currCategory = location.state;
+
   const [cards, setCards] = useState([]);
   const [prompts, setPrompts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
 
   useEffect(() => {
-    getPrompts(2)
+    getPrompts(currCategory.id)
   }, []);
 
   const generateIdea = () => {
