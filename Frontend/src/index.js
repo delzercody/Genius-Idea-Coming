@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import App from './components/App'
-import Home from './components/Home'
 import Form from './components/IdeaForm'
 import Category from './components/Category'
 import Profile from './components/Profile'
@@ -20,12 +19,11 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/IdeaForm" element={<Form />} />
-      <Route path="/Category/:ocassion" element={<Category />} />
+      <Route path="/Category" element={<Category />} />
       <Route path="/Profile/:id" element={<Profile />} />
       <Route path="/Ideas/:id" element={<Ideas />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/IdeaGenerator" element={<IdeaGenerator />} />
-
     </Routes>
   </BrowserRouter>
 )

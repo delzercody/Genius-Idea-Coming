@@ -3,9 +3,17 @@ import Sidebar from "./Sidebar"
 import NavBar from "./NavBar"
 import {Link} from 'react-router-dom'
 import '../stylesheets/Category.css'
+import CategoryCard from './CategoryCard'
 
 function Category() {
   const [cards, setCards] = useState([]);
+  const [prompts, setPrompts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState();
+
+  useEffect(() => {
+    getPrompts(2)
+  }, []);
+
   const generateIdea = () => {
     const newCard = {
       id: cards.length + 1,
@@ -14,6 +22,26 @@ function Category() {
     };
     setCards(prevCards => [...prevCards, newCard]);
   };
+
+  function getPrompts (id) {
+    fetch(`http://127.0.0.1:5000/promptbycategory/${id}`)
+    .then(res => res.json())
+    .then(res => {
+      setPrompts(res)
+      console.log(prompts)
+    })
+  }
+
+  const promptsDisplay = prompts.map(prompt => {
+    return (
+      <CategoryCard
+        className='category-card'
+        key={prompt.title}
+        name={prompt.title}
+        description={prompt.description} 
+      />
+    )
+  })
 
   return (
     <div>
@@ -24,7 +52,7 @@ function Category() {
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar />
+            <Sidebar setState={setSelectedCategory} getResources={getPrompts}/>
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
             <button type="button" className="btn btn-secondary" onClick={generateIdea}>
@@ -35,7 +63,10 @@ function Category() {
           <Link to="/IdeaForm" className="btn btn-secondary">Create an Idea</Link>
           </div>
         </div>
-        <div className="row mt-4">
+        <div className='card-display'>
+          {promptsDisplay}
+        </div>
+        {/* <div className="row mt-4">
           <div className="col-md-10 offset-md-2">
             <div className="card-container" style={{ marginTop: '300px' }}>
               {cards.map(card => (
@@ -56,8 +87,8 @@ function Category() {
               ))}
             </div>
           </div>
+        </div> */}
         </div>
-      </div>
     </div>
   );
 }

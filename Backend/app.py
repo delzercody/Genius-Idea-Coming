@@ -27,7 +27,6 @@ CORS(app)
 api = Api(app)
 migrate = Migrate(app, db)
 
-CORS(app)
 
 openai.api_key = API_KEY
 
@@ -175,7 +174,7 @@ class UserByID(Resource):
 class Categories(Resource):
     def get(self):
         # Retrieve all categories from the database and convert them to dictionaries
-        categories = [category.to_dict(only = ('name', 'description')) for category in Category.query.all()]
+        categories = [category.to_dict() for category in Category.query.all()]
         response = make_response(categories, 200)
         return response
 
@@ -204,7 +203,7 @@ class CategoryByID(Resource):
         category = Category.query.get(category_id)
         if category is not None:
             # Convert the category object to a dictionary and return it as a response
-            category_dict = category.to_dict(only = ( 'name','description', ))
+            category_dict = category.to_dict(only = ( 'name','description', 'id'))
             response = make_response(category_dict, 200)
             return response
         else:
@@ -282,7 +281,7 @@ api.add_resource( Prompts, '/prompts')
 class PromptByID( Resource ):
     def get( self, id ):
         try:
-            prompt = Prompt.find(id).to_dict( only = ( 'id', 'title', 'description', ))
+            prompt = Prompt.find(id).to_dict()
             response = make_response( prompt, 200 )
             return response
         except:
@@ -322,7 +321,7 @@ api.add_resource( PromptByID, '/prompts/<int:id>' )
 
 class PromptByCategoryId (Resource):
     def get(self, id):
-        prompts = [ prompt.to_dict(only=('category',)) for prompt in Prompt.query.filter_by(category_id=id) ]
+        prompts = [ prompt.to_dict() for prompt in Prompt.query.filter_by(category_id=id) ]
         response = make_response( prompts, 200 )
         return response
 api.add_resource( PromptByCategoryId, '/promptbycategory/<int:id>')

@@ -1,6 +1,6 @@
+import '../stylesheets/home.css';
 import { useEffect, useState } from 'react';
 import NavBar from "./NavBar";
-import '../stylesheets/home.css';
 import CategoryCard from './CategoryCard';
 
 function Home() {
@@ -22,7 +22,7 @@ function Home() {
   const categoryDisplay = categories.map(category => {
     return (
       <CategoryCard
-        key={category.id}
+        key={category.name}
         name={category.name}
         description={category.description}
       />
@@ -33,11 +33,11 @@ function Home() {
     <>
       <NavBar />
       <div className="home-title">
-        <h1>Share, Discover, and Create your Genius Ideas</h1>
-        <h3>What we're about:</h3>
-        <h4>What users are able to do</h4>
-        <h4>Why this is the best website ever</h4>
-        <h4>anything else we want to include</h4>
+        <h2>Share, Discover, and Create your Genius Ideas</h2>
+        <h2>What we're about:</h2>
+        <h2>What users are able to do</h2>
+        <h2>Why this is the best website ever</h2>
+        <h2>anything else we want to include</h2>
       </div>
       <div className="home-body">
         <h3>Idea Categories</h3>

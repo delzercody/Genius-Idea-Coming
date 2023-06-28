@@ -2,14 +2,20 @@
     background-color: #1c5e60;
     display: flex;
     justify-content: space-between;
-    height: 50px; 
+    text-align: center;
+    height: 5vh; 
     padding: 10px;
-    font-size: 5vh;
+}
+
+.nav-bar h1{
+    font-size: 2vmin;
 }
 
 .search-input{
     width: 25vw;
     border-radius: 5px;
+    font-size:2vmin;
+    height:1em;
 }
 
 .home-link{

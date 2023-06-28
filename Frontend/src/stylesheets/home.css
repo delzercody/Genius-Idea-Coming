@@ -5,8 +5,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 25vh;
+    height: 30vmin;
+    width: 100vw;
     padding: 10px;
+}
+
+.home-title > h2{
+  font-size: 3vmin;  
 }
 
 .home-body{
