@@ -11,14 +11,16 @@
 
 .home-body{
     background-color: #4de4ba;
-    display: flex;
-    justify-content: space-evenly;
+    /* display: flex; */
+    /* justify-content: space-evenly; */
     margin: 10px;
     padding: 10px;
 }
 
 .category-container{
     background-color: #9fc0cf;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 input{

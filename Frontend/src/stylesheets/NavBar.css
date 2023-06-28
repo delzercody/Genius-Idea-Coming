@@ -2,8 +2,9 @@
     background-color: #1c5e60;
     display: flex;
     justify-content: space-between;
-    height: 6vh; 
+    height: 50px; 
     padding: 10px;
+    font-size: 5vh;
 }
 
 .search-input{

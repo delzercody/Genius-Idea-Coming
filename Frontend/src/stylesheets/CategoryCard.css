@@ -1,0 +1,8 @@
+.card{
+    height: 25vh;
+    width: 15vw;
+}
+
+.card-body{
+    text-align: center;
+}
