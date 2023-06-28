@@ -37,18 +37,15 @@ class Category(db.Model, SerializerMixin):
     def validate_name( self, key, name ):
         if type(name) is str and len(name) in range(1, 51):
             return name
-        else: ValueError( "Category name must be a string between 1 - 50 characters.")
+        else: 
+            raise ValueError( "Category name must be a string between 1 - 50 characters.")
     # Description cannot exceed 255 characters
     @validates( 'description' )
     def validate_description( self, key, description ):
         if type(description) is str and len(description) < 255 :
             return description
-        else: ValueError( "Description cannot exceed 255 characters.")
-
-
-    # def __init__(self, name, description):
-    #     self.name = name
-    #     self.description = description
+        else: 
+            raise ValueError( "Description cannot exceed 255 characters.")
 
     def __repr__(self):
         return f"<Category {self.name}>"
@@ -109,44 +106,51 @@ class User(db.Model, SerializerMixin):
         un = User.query.filter(User.username.like(f'%{username}%')).first()
         if type(username) is str and username and un == None and len(username) in range(5, 16) and re.match(r'^[A-Za-z0-9_]+$', username):
             return username
-        else: ValueError('Username must be unique string between 5 - 15 characters and not contain any special characters.')
+        else: 
+            raise ValueError('Username must be unique string between 5 - 15 characters and not contain any special characters.')
     # Email is a unique and valid email
     @validates('email')
     def validate_email(self, key, email):
         em = User.query.filter(User.email.like(f'%{email}%')).first()
         if type(email) is str and email and em == None and "@" and ".com" in email:
             return email
-        else: ValueError( 'Must be a valid email or email has already been registered.')
+        else: 
+            raise ValueError( 'Must be a valid email or email has already been registered.')
     # First and last name should be a string with a max of 50 characters
     @validates( 'first_name' )
     def validate_first_name( self, key, first_name ):
         if type(first_name) is str and len(first_name) in range(1, 51):
             return first_name
-        else: ValueError( "First and last name must be a string between 1 - 50 characters.")
+        else: 
+            raise ValueError( "First and last name must be a string between 1 - 50 characters.")
     @validates( 'last_name' )
     def validate_last_name( self, key, last_name ):
         if type(last_name) is str and len(last_name) in range(1, 51):
             return last_name
-        else: ValueError( "First and last name must be a string between 1 - 50 characters.")
+        else: 
+            raise ValueError( "First and last name must be a string between 1 - 50 characters.")
     # Bio has a 200 character limit
     @validates( 'bio' )
     def validate_bio( self, key, bio ):
         if type(bio) is str and len(bio) < 200 :
             return bio
-        else: ValueError( "Bio cannot exceed 200 characters.")
+        else: 
+            raise ValueError( "Bio cannot exceed 200 characters.")
     # Location has a 100 character limit
     @validates( 'location' )
     def validate_location( self, key, location ):
         if type(location) is str and len(location) < 100 :
             return location
-        else: ValueError( "Location cannot exceed 100 characters.")
+        else: 
+            raise ValueError( "Location cannot exceed 100 characters.")
     # Avatar is a .jpg or .png // maybe gif?
     @validates( 'avatar' )
     def validates_avatar( self, key, avatar ):
         file_format = [ 'jpeg', 'png', 'jpg', 'gif' ]
         if isinstance(avatar, str) and any(format_str in avatar for format_str in file_format):
             return avatar
-        else: raise ValueError("Only JPEG/PNG/GIF images are permitted.")
+        else: 
+            raise ValueError("Only JPEG/PNG/GIF images are permitted.")
 
 
 ########### Password hashing #################
@@ -163,16 +167,6 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8')
         )
-
-
-    # def __init__(self, username, password, email, first_name, last_name, bio=None, location=None):
-    #     self.username = username
-    #     self.password = password
-    #     self.email = email
-    #     self.first_name = first_name 
-    #     self.last_name = last_name 
-    #     self.bio = bio
-    #     self.location = location
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -204,20 +198,14 @@ class Prompt(db.Model, SerializerMixin):
     # Relationship with User_Idea model (one-to-many)
     user_ideas = db.relationship('User_Idea', back_populates='prompt', cascade = 'all, delete-orphan')
 
-
-    
-
     serialize_rules = (
         '-user.prompts',
         '-user_ideas.prompt'
         )  
     # Exclude 'user' and 'user_ideas' relationships from serialization
-    
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())    
-
-    
 
 ############ validations for Prompt ##############
     #checking if user and category exists
@@ -226,31 +214,29 @@ class Prompt(db.Model, SerializerMixin):
         user = User.find( user_id )        
         if user:
             return user_id
-        else: ValueError( "User not found. ")
+        else: 
+            raise ValueError( "User not found. ")
     @validates( 'category_id')
     def validate_category( self, key, category_id ):
         user = Category.find( category_id )        
         if user:
             return category_id
-        else: ValueError( "Category not found. ")
+        else: 
+            raise ValueError( "Category not found. ")
     # title can't exceed 150 characters
     @validates( 'title' )
     def validate_title( self, key, title ):
         if type(title) is str and len(title) < 150 :
             return title
-        else: ValueError( "Title cannot exceed 150 characters.")
+        else: 
+            raise ValueError( "Title cannot exceed 150 characters.")
     #description can't exceed 10k characters
     @validates( 'description' )
     def validate_description( self, key, description ):
         if type(description) is str and len(description) < 10000 :
             return description
-        else: ValueError( "Description cannot exceed 10,000 characters.")
-
-
-    # def __init__(self, category_id, title, description):
-    #     self.category_id = category_id
-    #     self.title = title
-    #     self.description = description
+        else: 
+            raise ValueError( "Description cannot exceed 10,000 characters.")
 
     def __repr__(self):
         return f"<Prompt {self.title}>"
@@ -298,170 +284,22 @@ class User_Idea(db.Model, SerializerMixin):
         user = User.find( user_id )        
         if user:
             return user_id
-        else: ValueError( "User not found. ")
+        else: 
+            raise ValueError( "User not found. ")
     @validates( 'prompt_id')
     def validate_prompt( self, key, prompt_id ):
         user = Category.find( prompt_id )        
         if user:
             return prompt_id
-        else: ValueError( "Prompt not found. ")
+        else: 
+            raise ValueError( "Prompt not found. ")
     # notes cannot exceed 10k characters
     @validates( 'notes' )
     def validate_notes( self, key, notes ):
         if type(notes) is str and len(notes) < 10000 :
             return notes
-        else: ValueError( "Notes cannot exceed 10,000 characters.")
-
-
-    # def __init__(self, user_id, prompt_id, notes=None):
-    #     self.user_id = user_id
-    #     self.prompt_id = prompt_id
-    #     self.notes = notes
+        else: 
+            raise ValueError( "Notes cannot exceed 10,000 characters.")
 
     def __repr__(self):
         return f"SavedPrompt(id={self.id}, user_id={self.user_id}, prompt_id={self.prompt_id}, saved_at={self.saved_at})"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # class Category(db.Model):
-# #     category_id = db.Column(db.Integer, primary_key=True)
-# #     name = db.Column(db.String(50), nullable=False)
-# #     ideas = db.relationship('Idea', backref='category', lazy=True)
-
-# class Category(db.Model):
-#     __tablename__ = 'categories'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50), unique=True, nullable=False)
-#     description = db.Column(db.String(255), nullable=False)
-
-#     ideas = db.relationship('Idea', back_populates='category')
-
-#     def __init__(self, name, description):
-#         self.name = name
-#         self.description = description
-
-#     def __repr__(self):
-#         return f"<Category {self.name}>"
-
-
-
-# class Idea(db.Model):
-#     __tablename__ = 'ideas'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-#     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
-#     title = db.Column(db.String(100), nullable=False)
-#     description = db.Column(db.Text, nullable=False)
-#     users = db.relationship('User_Idea', back_populates='idea')
-#     user = db.relationship('User', back_populates='ideas', foreign_keys=[user_id])
-#     category = db.relationship('Category', back_populates='ideas')
-#     saved_ideas = db.relationship('SavedIdea', back_populates='idea')
-
-#     def __init__(self, user_id, category_id, title, description):
-#         self.user_id = user_id
-#         self.category_id = category_id
-#         self.title = title
-#         self.description = description
-
-#     def __repr__(self):
-#         return f"<Idea {self.title}>"
-
-
-# # class Idea(db.Model):
-# #     idea_id = db.Column(db.Integer, primary_key=True)
-# #     prompt = db.Column(db.String(100), nullable=False)
-# #     description = db.Column(db.Text, nullable=False) #I want this to be a user input field that becomes the saved idea in the collection of ideas and has the full CRUD ability. What adjustments need to be made to make this happen?
-# #     category_id = db.Column(db.Integer, db.ForeignKey('category.category_id'), nullable=False) #What's going on with the foreign key? Why do we have to do a form of dot notation to access the value?
-# #     saved_ideas = db.relationship('SavedIdea', back_populates='idea')
-# #     # saved_ideas = db.relationship('SavedIdea', backref='user', lazy=True) #What is backref? What about backpopulates? What even is backpopulates? Why would you choose one over the other?
-
-# class User(db.Model):
-#     __tablename__ = 'users'
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String(50), unique=True, nullable=False)
-#     password = db.Column(db.String(100), nullable=False)
-#     email = db.Column(db.String(100), unique=True, nullable=False)
-#     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-#     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-#     ideas = db.relationship('User_Idea', back_populates='user')
-#     saved_ideas = db.relationship('SavedIdea', back_populates='saved_by_user')
-#     bio = db.Column(db.Text)
-#     location = db.Column(db.String(100))
-
-#     def __init__(self, username, password, email, bio=None, location=None):
-#         self.username = username
-#         self.password = password
-#         self.email = email
-#         self.bio = bio
-#         self.location = location
-
-#     def __repr__(self):
-#         return f"<User {self.username}>"
-
-
-# # class User(db.Model):
-# #     user_id = db.Column(db.Integer, primary_key=True)
-# #     username = db.Column(db.String(50), unique=True, nullable=False) #Going to need to have some sort of authentication and/or authorization. Also want to make it so once someone logs in they stay logged in.
-# #     password = db.Column(db.String(100), nullable=False) #This should display * when the user is inputting the password. should set up some password rules like must include a letter and at least one number/special character
-# #     saved_ideas = db.relationship('SavedIdea', backref='user', lazy=True)
-
-# class User_Idea(db.Model):
-#     __tablename__ = 'user_ideas'
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-#     idea_id = db.Column(db.Integer, db.ForeignKey('ideas.id'), nullable=False)
-#     is_saved = db.Column(db.Boolean, default=False)
-#     is_created = db.Column(db.Boolean, default=False)
-#     saved_at = db.Column(db.DateTime, default=datetime.utcnow)
-#     notes = db.Column(db.String(255))
-
-#     user = db.relationship('User', back_populates='ideas')
-#     idea = db.relationship('Idea', back_populates='users')
-
-#     def __init__(self, user, idea, notes=None):
-#         self.user = user
-#         self.idea = idea
-#         self.notes = notes
-
-#     def __repr__(self):
-#         return f"SavedIdea(id={self.id}, user_id={self.user_id}, idea_id={self.idea_id}, saved_at={self.saved_at})"
-
-
-# # class SavedIdea(db.Model):
-# #     __tablename__ = 'saved_ideas'
-# #     id = db.Column(db.Integer, primary_key=True)
-# #     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False) #Again with the dot notation. How come? Do we really have 2 primary keys here?
-# #     idea_id = db.Column(db.Integer, db.ForeignKey('ideas.id'), nullable= False) 
-# #     notes = db.Column(db.Text)#This should be tied to description from the class Idea. I want it to be user input.
-
-
-    
