@@ -7,6 +7,7 @@ import Form from './components/IdeaForm'
 import Category from './components/Category'
 import Profile from './components/Profile'
 import Ideas from './components/Ideas'
+import Home from './components/Home'
 
 import Login from './components/Login'
 
@@ -19,6 +20,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
+      <Route path='/home' element={<Home />}/>
       <Route path="/IdeaForm" element={<IdeaForm />} />
       <Route path="/Category" element={<Category />} />
       <Route path="/Profile/:id" element={<Profile />} />

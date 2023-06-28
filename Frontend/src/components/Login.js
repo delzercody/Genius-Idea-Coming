@@ -24,10 +24,10 @@ function Login({updateUser, user }) {
       },
       body: JSON.stringify({ username : username, password : password}),
     }).then((r) => {
-      // console.log(r)
+      console.log(r)
       if (r.ok) {
         r.json().then((r) => updateUser(r))
-        .then(navigate("/"));
+        .then(navigate("/home"));
       } else {
         r.json().then((err) => setErrors(err));
           window.alert("Invalid username or password")
