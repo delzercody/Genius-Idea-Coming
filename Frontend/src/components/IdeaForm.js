@@ -1,6 +1,6 @@
 import React from "react";
-import { useRef } from 'react';
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useRef, useState } from 'react';
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import NavBar from "./NavBar";
 
@@ -10,19 +10,27 @@ const initialValues = {
   category: ""
 };
 
-const validationSchema = Yup.object({
-  title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
-  category: Yup.string().required("Category is required")
-});
-
 const categories = [
   { label: "Cooking", value: "Cooking" },
   { label: "Technology", value: "Technology" },
   { label: "Business", value: "Business" }
 ];
 
+const validationSchema = Yup.object({
+  title: Yup.string().required("Title is required"),
+  description: Yup.string().required("Description is required"),
+  category: Yup.string().required("Category is required")
+});
+
 function IdeaForm() {
+  const formik = useFormik();
+  const [ title, setTitle ] = useState(initialValues.title);
+  const [ description, setDescription ] = useState(initialValues.description);
+  const [ category, setCategory ] = useState(initialValues.category);
+
+  const handleSubmit = (values) => {
+    console.log("Form submitted with values:", values);
+  };
 
   return (
     <div>
@@ -31,7 +39,7 @@ function IdeaForm() {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <Form>
           <div className="form-group">
