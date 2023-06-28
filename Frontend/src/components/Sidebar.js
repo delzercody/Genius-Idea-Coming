@@ -1,7 +1,38 @@
-import {Link} from 'react-router-dom'
-import '../stylesheets/Sidebar.css'
+import { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
+import '../stylesheets/Sidebar.css';
 
-function Sidebar() {
+function Sidebar({ setState, getResources }) {
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    getCategories()
+  }, []);
+
+  function getCategories () {
+    fetch('http://127.0.0.1:5000/categories')
+    .then(res => res.json())
+    .then(res => {
+      setCategories(res)
+    })
+  }
+
+  const categoryDisplay = categories.map(category => {
+    return (
+      <button
+        className='sidebar-button'
+        key={category.name}
+        onClick={() => {
+          console.log(category)
+          setState(category)
+          getResources(category.id)
+        }}
+      >
+      {category.name}
+      </button>
+    )
+  })
+
   return (
       <div className="list-group linkbar sidebar">
         <div className="profile-picture">
@@ -15,28 +46,9 @@ function Sidebar() {
         <h5 className='profile-bio'>
           Drip is forever
         </h5>
-        <hr className='bar'></hr>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/IdeaForm">Form</Link>
-        </h5>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/IdeaGenerator">IdeaGenerator</Link>
-        </h5>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/Category/cooking">Cooking</Link>
-        </h5>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/Category/technology">Technology</Link>
-        </h5>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/Category/home">Home Improvement</Link>
-        </h5>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/Category/art">Art</Link>
-        </h5>
-        <h5 className="list">
-          <Link className='sidebar-link' to="/Category/business">Business</Link>
-        </h5>
+        <div className='button-container'>
+          {categoryDisplay}
+        </div>
       </div>
   );
 }
