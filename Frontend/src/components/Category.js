@@ -14,7 +14,7 @@ function Category() {
 
   useEffect(() => {
     getPrompts(currCategory.id);
-  }, [currCategory.id]);
+  }, [currCategory]);
 
   function getResources (id) {
     getPrompts(id)
@@ -28,6 +28,7 @@ function Category() {
       title: randomPrompt.title,
       content: randomPrompt.description,
     };
+    setPrompts(prompts.shift())
     setPrompts([newCard, ...prompts]);
   };
 
@@ -40,7 +41,7 @@ function Category() {
   };
 
   const promptsDisplay = prompts.map((prompt) => (
-    <div className="row mt-4" key={prompt.id}>
+    <div className="row mt-4" key={prompt.name}>
       <div className="col-md-10 offset-md-2">
         <CategoryCard
           key={prompt.name}
@@ -89,7 +90,6 @@ function Category() {
 }
 
 export default Category;
-
 
   /* <div className="row mt-4">
     <div className="col-md-10 offset-md-2">
