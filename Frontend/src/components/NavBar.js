@@ -1,5 +1,6 @@
 import "../stylesheets/navbar.css"
 import {Link} from 'react-router-dom'
+import Login from "./Login";
 
 function NavBar () {
 
@@ -13,9 +14,12 @@ return (
             placeholder="Search"
             type="text">
         </input>
-        <button className="login-button">
-            Login
-        </button>
+        <Link to = "/login" className="login-link" >
+            <button className="login-button">
+                Login
+                <Login />
+            </button>
+        </Link>
     </div>
 )
 };

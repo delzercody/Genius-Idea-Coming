@@ -10,6 +10,7 @@ from config.database import db
 from config.config import SQLALCHEMY_DATABASE_URI
 from models import Category, Prompt, User, User_Idea
 from routes import *
+from generated.secret import key
 import openai
 from generated.secret import API_KEY
 from werkzeug.exceptions import NotFound, UnprocessableEntity, Unauthorized
@@ -23,7 +24,7 @@ app.config['DEBUG'] = True
 db.init_app(app)
 CORS(app)
 
-
+app.secret_key = key
 api = Api(app)
 migrate = Migrate(app, db)
 
@@ -57,6 +58,14 @@ def authorize():
     except: 
         raise Unauthorized("invalid credentials")
 
+@app.route('/dark-mode', methods=["GET"])
+def mode():
+    return make_response(jsonify(
+        {
+            "cookies": request.cookies["mode"]
+        }
+    ), 200)
+
 class Signup( Resource ):
     def post(self):
         rq = request.get_json()
@@ -73,7 +82,7 @@ class Signup( Resource ):
         db.session.add(new_user)
         db.session.commit()
         session['user_id'] = new_user.id
-        return make_response(new_user.to_dict(rules = ('-_password_hash', )), 201)
+        return make_response(new_user.to_dict(rules = ('-_password_hash', )), 200)
     
 api.add_resource(Signup, '/signup')
 
@@ -84,7 +93,7 @@ class Login(Resource):
             user = User.query.filter_by(username = rq.get('username')).first()
             if user.authenticate(rq.get('password')):
                 session['user_id'] = user.id 
-                return make_response(user.to_dict(), 200)
+                return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
         except:
             abort(401, "Unauthorized")
 
@@ -115,6 +124,7 @@ class Users(Resource):
             # Add the new user to the session and commit the changes to the database
             db.session.add(new_user)
             db.session.commit()
+            session['user_id'] = new_user.id
             # Convert the new user to a dictionary and return it as a response
             new_user_dict = new_user.to_dict()
             response = make_response(new_user_dict, 201)
@@ -255,7 +265,7 @@ api.add_resource(CategoryByID, '/categories/<int:category_id>')
 
 class Prompts( Resource ):
     def get(self):
-        prompts = [ p.to_dict() for p in Prompt.query.all() ]
+        prompts = [ p.to_dict(only = ( 'id', 'title', 'description', )) for p in Prompt.query.all() ]
         response = make_response( prompts, 200 )
         return response
 
