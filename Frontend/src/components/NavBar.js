@@ -14,12 +14,12 @@ return (
             placeholder="Search"
             type="text">
         </input>
-        <Link to = "/login" className="login-link" >
+        {/* <Link to = "/login" className="login-link" >
             <button className="login-button">
                 Login
                 <Login />
             </button>
-        </Link>
+        </Link> */}
     </div>
 )
 };

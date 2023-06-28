@@ -28,6 +28,7 @@ function App() {
 
   return (
     <div> 
+      <h1>HELLO</h1>
       <Login 
         updateUser = {updateUser}
         user = {user}
