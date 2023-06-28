@@ -1,35 +1,34 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import NavBar from './NavBar';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import '../stylesheets/Category.css';
 import CategoryCard from './CategoryCard';
-import { useLocation } from 'react-router-dom';
 
 function Category() {
   const location = useLocation();
   const currCategory = location.state;
 
-  const [cards, setCards] = useState([]);
   const [prompts, setPrompts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState();
-  const [showPrompts, setShowPrompts] = useState(false); // State variable to control the visibility of prompts
+  const [selectedCategory, setSelectedCategory] = useState([{}]);
 
   useEffect(() => {
     getPrompts(currCategory.id);
-  }, []);
+  }, [currCategory.id]);
+
+  function getResources (id) {
+    getPrompts(id)
+  }
 
   const generateIdea = () => {
-    const randomIndex = Math.floor(Math.random() * prompts.length); // Generate a random index within the prompts array
-    const randomPrompt = prompts[randomIndex]; // Get the random prompt
+    const randomIndex = Math.floor(Math.random() * prompts.length);
+    const randomPrompt = prompts[randomIndex];
 
     const newCard = {
-      id: cards.length + 1,
       title: randomPrompt.title,
       content: randomPrompt.description,
     };
-    setCards((prevCards) => [...prevCards, newCard]);
-    setShowPrompts(true); // Show prompts when the button is clicked
+    setPrompts([newCard, ...prompts]);
   };
 
   const getPrompts = (id) => {
@@ -40,24 +39,18 @@ function Category() {
       });
   };
 
-  useEffect(() => {
-    getPrompts(currCategory.id);
-  }, [currCategory.id]);
-
-  const promptsDisplay = showPrompts ? (
-    // Render prompts only if showPrompts is true and there are cards available
-    cards.map((card) => (
-      <div className="row mt-4" key={card.id}>
-        <div className="col-md-10 offset-md-2">
-          <CategoryCard
-            className="category-card"
-            name={card.title}
-            description={card.content}
-          />
-        </div>
+  const promptsDisplay = prompts.map((prompt) => (
+    <div className="row mt-4" key={prompt.id}>
+      <div className="col-md-10 offset-md-2">
+        <CategoryCard
+          key={prompt.name}
+          className="category-prompt"
+          name={prompt.title}
+          description={prompt.content}
+        />
       </div>
-    ))
-  ) : null;
+    </div>
+  ));
 
   return (
     <div>
@@ -68,7 +61,7 @@ function Category() {
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar setState={setSelectedCategory} getResources={getPrompts} />
+            <Sidebar setState={setSelectedCategory} getResources={getResources}/>
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
             <button
@@ -86,7 +79,7 @@ function Category() {
           </div>
         </div>
       </div>
-      {promptsDisplay && (
+      {promptsDisplay.length > 0 && (
         <div className="container" style={{ marginTop: '300px', justifyContent: 'center' }}>
           {promptsDisplay}
         </div>
@@ -95,30 +88,28 @@ function Category() {
   );
 }
 
-export default Category
+export default Category;
 
 
-
-
-        {/* <div className="row mt-4">
-          <div className="col-md-10 offset-md-2">
-            <div className="card-container" style={{ marginTop: '300px' }}>
-              {cards.map(card => (
-                <div className="card mb-3" key={card.id}>
-                  <div className="card-body">
-                    <div className="card-title text-center">{card.title}</div>
-                    <div className="card-text text-center">{card.content}</div>
-                    <div className="d-flex justify-content-between mt-2">
-                      <div>
-                        <a href="#" className="btn btn-primary">Add to Collection</a>
-                      </div>
-                      <div>
-                        <a href="#" className="btn btn-primary">Comment</a>
-                      </div>
-                    </div>
-                  </div>
+  /* <div className="row mt-4">
+    <div className="col-md-10 offset-md-2">
+      <div className="card-container" style={{ marginTop: '300px' }}>
+        {cards.map(card => (
+          <div className="card mb-3" key={card.id}>
+            <div className="card-body">
+              <div className="card-title text-center">{card.title}</div>
+              <div className="card-text text-center">{card.content}</div>
+              <div className="d-flex justify-content-between mt-2">
+                <div>
+                  <a href="#" className="btn btn-primary">Add to Collection</a>
                 </div>
-              ))}
+                <div>
+                  <a href="#" className="btn btn-primary">Comment</a>
+                </div>
+              </div>
             </div>
           </div>
-        </div> */}
+        ))}
+      </div>
+    </div>
+  </div> */
