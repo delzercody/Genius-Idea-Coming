@@ -11,6 +11,7 @@ import Ideas from './components/Ideas'
 import Login from './components/Login'
 
 import IdeaGenerator from './components/IdeaGenerator'
+import IdeaForm from './components/IdeaForm'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,7 +19,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/IdeaForm" element={<Form />} />
+      <Route path="/IdeaForm" element={<IdeaForm />} />
       <Route path="/Category" element={<Category />} />
       <Route path="/Profile/:id" element={<Profile />} />
       <Route path="/Ideas/:id" element={<Ideas />} />
