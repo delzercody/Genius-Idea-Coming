@@ -22,6 +22,7 @@ function Home() {
   const categoryDisplay = categories.map(category => {
     return (
       <CategoryCard
+        self={category}
         key={category.name}
         name={category.name}
         description={category.description}
