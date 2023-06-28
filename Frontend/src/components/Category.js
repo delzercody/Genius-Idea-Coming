@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
-import Sidebar from "./Sidebar"
-import NavBar from "./NavBar"
-import { Link } from 'react-router-dom'
-import '../stylesheets/Category.css'
-import CategoryCard from './CategoryCard'
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import Sidebar from './Sidebar';
+import NavBar from './NavBar';
+import { Link } from 'react-router-dom';
+import '../stylesheets/Category.css';
+import CategoryCard from './CategoryCard';
+import { useLocation } from 'react-router-dom';
 
 function Category() {
   const location = useLocation();
@@ -13,39 +13,51 @@ function Category() {
   const [cards, setCards] = useState([]);
   const [prompts, setPrompts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
+  const [showPrompts, setShowPrompts] = useState(false); // State variable to control the visibility of prompts
 
   useEffect(() => {
-    getPrompts(currCategory.id)
+    getPrompts(currCategory.id);
   }, []);
 
   const generateIdea = () => {
+    const randomIndex = Math.floor(Math.random() * prompts.length); // Generate a random index within the prompts array
+    const randomPrompt = prompts[randomIndex]; // Get the random prompt
+
     const newCard = {
       id: cards.length + 1,
-      title: "New Card Title",
-      content: "New Card Content"
+      title: randomPrompt.title,
+      content: randomPrompt.description,
     };
-    setCards(prevCards => [...prevCards, newCard]);
+    setCards((prevCards) => [...prevCards, newCard]);
+    setShowPrompts(true); // Show prompts when the button is clicked
   };
 
-  function getPrompts (id) {
+  const getPrompts = (id) => {
     fetch(`http://127.0.0.1:5000/promptbycategory/${id}`)
-    .then(res => res.json())
-    .then(res => {
-      setPrompts(res)
-      console.log(prompts)
-    })
-  }
+      .then((res) => res.json())
+      .then((res) => {
+        setPrompts(res);
+      });
+  };
 
-  const promptsDisplay = prompts.map(prompt => {
-    return (
-      <CategoryCard
-        className='category-card'
-        key={prompt.title}
-        name={prompt.title}
-        description={prompt.description} 
-      />
-    )
-  })
+  useEffect(() => {
+    getPrompts(currCategory.id);
+  }, [currCategory.id]);
+
+  const promptsDisplay = showPrompts ? (
+    // Render prompts only if showPrompts is true and there are cards available
+    cards.map((card) => (
+      <div className="row mt-4" key={card.id}>
+        <div className="col-md-10 offset-md-2">
+          <CategoryCard
+            className="category-card"
+            name={card.title}
+            description={card.content}
+          />
+        </div>
+      </div>
+    ))
+  ) : null;
 
   return (
     <div>
@@ -56,20 +68,38 @@ function Category() {
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar setState={setSelectedCategory} getResources={getPrompts}/>
+            <Sidebar setState={setSelectedCategory} getResources={getPrompts} />
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
-            <button type="button" className="btn btn-secondary" onClick={generateIdea}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={generateIdea}
+            >
               Generate an idea
             </button>
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
-          <Link to="/IdeaForm" className="btn btn-secondary">Create an Idea</Link>
+            <Link to="/IdeaForm" className="btn btn-secondary">
+              Create an Idea
+            </Link>
           </div>
         </div>
-        <div className='card-display'>
+      </div>
+      {promptsDisplay && (
+        <div className="container" style={{ marginTop: '300px', justifyContent: 'center' }}>
           {promptsDisplay}
         </div>
+      )}
+    </div>
+  );
+}
+
+export default Category
+
+
+
+
         {/* <div className="row mt-4">
           <div className="col-md-10 offset-md-2">
             <div className="card-container" style={{ marginTop: '300px' }}>
@@ -92,9 +122,3 @@ function Category() {
             </div>
           </div>
         </div> */}
-        </div>
-    </div>
-  );
-}
-
-export default Category;
