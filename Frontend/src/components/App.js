@@ -16,13 +16,13 @@ function App () {
     <BrowserRouter>
      <Routes>
        <Route path="/" element={<Login setCurrUser={setCurrUser}/>} />
-       <Route path='/home' element={<Home currUser={currUser}/>}/>
-       <Route path="/IdeaForm" element={<IdeaForm currUser={currUser}/>} />
-       <Route path="/Category" element={<Category currUser={currUser}/>} />
-       <Route path="/Profile/:id" element={<Profile currUser={currUser}/>} />
-       <Route path="/Ideas/:id" element={<Ideas currUser={currUser}/>} />
-       <Route path="/Login" element={<Login currUser={currUser}/>} />
-       <Route path="/IdeaGenerator" element={<IdeaGenerator currUser={currUser}/>} />
+       <Route path='/home' element={<Home currUser={currUser} setCurrUser={setCurrUser} />}/>
+       <Route path="/IdeaForm" element={<IdeaForm currUser={currUser} setCurrUser={setCurrUser}/>} />
+       <Route path="/Category" element={<Category currUser={currUser} setCurrUser={setCurrUser}/>} />
+       <Route path="/Profile/:id" element={<Profile currUser={currUser} setCurrUser={setCurrUser}/>} />
+       <Route path="/Ideas/:id" element={<Ideas currUser={currUser} setCurrUser={setCurrUser}/>} />
+       <Route path="/Login" element={<Login currUser={currUser} setCurrUser={setCurrUser}/>} />
+       <Route path="/IdeaGenerator" element={<IdeaGenerator currUser={currUser} setCurrUser={setCurrUser}/>} />
      </Routes>
    </BrowserRouter>
   )

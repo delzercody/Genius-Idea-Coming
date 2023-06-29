@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import '../stylesheets/Category.css';
 import CategoryCard from './CategoryCard';
 
-function Category({ currUser }) {
+function Category({ currUser, setCurrUser }) {
   const location = useLocation();
   const currCategory = location.state;
 
@@ -160,7 +160,7 @@ function Category({ currUser }) {
 
   return (
     <div>
-      <NavBar />
+      <NavBar setCurrUser = {setCurrUser} />
       <div className="headerimage d-flex justify-content-center">
         This is a giant image
       </div>
