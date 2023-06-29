@@ -22,7 +22,7 @@ const validationSchema = Yup.object({
   category: Yup.string().required("Category is required")
 });
 
-function IdeaForm() {
+function IdeaForm({setCurrUser}) {
   const formik = useFormik();
 
   const handleSubmit = (values) => {
@@ -31,7 +31,7 @@ function IdeaForm() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar setCurrUser = {setCurrUser} />
       <h2>Create an idea</h2>
       <Formik
         initialValues={initialValues}

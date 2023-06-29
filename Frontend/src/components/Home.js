@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import NavBar from "./NavBar";
 import CategoryCard from './CategoryCard';
 
-function Home({ currUser }) {
+function Home({ currUser, setCurrUser }) {
   const [ categories, setCategories ] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function Home({ currUser }) {
 
   return (
     <>
-      <NavBar />
+      <NavBar setCurrUser = {setCurrUser} />
       <div className="home-title">
         <h2>Share, Discover, and Create your Genius Ideas</h2>
         <h2>What we're about:</h2>
