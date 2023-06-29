@@ -12,6 +12,9 @@
     padding: 48px 0 0;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     margin-top: 63px;
+    background-color: #2d2226;
+    color:#F3D8C7 ;
+
 }
 
 .button-container{
@@ -26,9 +29,9 @@
 
 .circle-image {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin-left: 65px;
+    width: 100px;
+    height: 100px;
+    margin-left: 30px;
   }
   
 .profile-name {
@@ -37,4 +40,9 @@
 
 .profile-bio {
     text-align: center;
+}
+
+.sidebar-button{
+    background-color: #2d2226;
+    color:#F3D8C7 ;
 }

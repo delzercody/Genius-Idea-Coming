@@ -3,12 +3,41 @@ section{
 }
 
 .form{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-evenly; */
+    position:absolute;
+	left:50%;
+	top:50%;
+	transform: translate(-50%,-50%);
+    background-color: rgba(136, 71, 71, 0.89);
+	border-radius:3px;
+	padding:70px 100px;
+    text-align: center;
+
 }
 
 section{
     text-align: center;
 }
+
+.welcome{
+    font-family: monospace;
+    color: #2d2226;
+    text-align: center;
+    line-height: 10cap;
+    height: 150px;
+    width: 100%;
+    line-height:4;
+}
+
+.asking{
+    font-family: monospace;
+    color: #2d2226;
+    text-align: center;
+    line-height: 10cap;
+    line-height:2;
+}
+
+/* // */

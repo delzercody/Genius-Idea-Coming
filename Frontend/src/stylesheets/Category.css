@@ -11,6 +11,8 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    background-color: #F7F3E3;
+
 }
 
 .btn-secondary{
