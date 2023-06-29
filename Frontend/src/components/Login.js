@@ -75,7 +75,7 @@ function Login({ setCurrUser }) {
             <input value={formik.values.password} onChange={formik.handleChange} type='password' name='password' />
             <label>Avatar</label>
             <input value={formik.values.avatar} onChange={formik.handleChange} type='text' name='avatar' />
-            <input type='submit' value='Sign Up' className='button' />
+            <input type='submit' value='Sign Up' className='form-button' />
           </form>
         ) : (
           <form className='form' onSubmit={formik.handleSubmit}>
@@ -84,7 +84,7 @@ function Login({ setCurrUser }) {
             <input value={formik.values.username} onChange={formik.handleChange} type='text' name='username' />
             <label>Password</label>
             <input value={formik.values.password} onChange={formik.handleChange} type='password' name='password' />
-            <input type='submit' value='Login' className='button' />
+            <input type='submit' value='Login' className='form-button' />
           </form>
         )}
         <section>

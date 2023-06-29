@@ -44,12 +44,11 @@
   text-overflow: ellipsis;
   transition: all .14s ease-out;
   white-space: nowrap;
-  :hover {
+}
+  .logout-button:hover {
       box-shadow: 4px 4px 0 #000;
       transform: translate(-4px,-4px);
   }
-  :focus-visible{
+  .logout-button:focus-visible{
       outline-offset: 1px;
   }
-
-}
