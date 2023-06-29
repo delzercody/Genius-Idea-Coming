@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import NavBar from './NavBar';
 
-function IdeaGenerator() {
+function IdeaGenerator({ currUser }) {
   const [inputWord, setInputWord] = useState('');
   const [generatedIdea, setGeneratedIdea] = useState('');
+  const [cards, setCards] = useState([]);
 
   const handleInputChange = (event) => {
     setInputWord(event.target.value);
@@ -27,11 +28,12 @@ function IdeaGenerator() {
       const data = await response.json();
       console.log('Received response:', data);
       setGeneratedIdea(data.generatedIdea);
+      setCards([...cards, { title: inputWord, idea: data.generatedIdea }]);
+      setInputWord('');
     } catch (error) {
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <div>
@@ -42,7 +44,7 @@ function IdeaGenerator() {
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar />
+            <Sidebar currUser={currUser} />
           </div>
         </div>
         <div className="d-flex justify-content-center">
@@ -51,12 +53,14 @@ function IdeaGenerator() {
             <button type="submit">Generate Idea</button>
           </form>
         </div>
-        {generatedIdea && (
-          <div className="generated-idea">
-            <h3>Generated Idea:</h3>
-            <p>{generatedIdea}</p>
+        {cards.map((card, index) => (
+          <div className="card w-75" key={index} style={{ marginLeft: '170px', justifyContent: 'center' }}>
+            <div className="card-body d-flex flex-column align-items-center">
+              <h5 className="card-title">{card.title}</h5>
+              <p className="card-text">{card.idea}</p>
+            </div>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
