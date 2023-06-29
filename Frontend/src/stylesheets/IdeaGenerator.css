@@ -1,0 +1,10 @@
+.my-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .my-dropdown .dropdown-menu {
+    position: absolute;
+    top: -50px;
+  }
+  
