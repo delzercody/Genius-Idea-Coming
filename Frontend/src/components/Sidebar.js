@@ -49,6 +49,11 @@ function Sidebar({ setState, getResources, currUser }) {
         <div className='button-container'>
           {categoryDisplay}
         </div>
+        <div className="link">
+          <Link to="/IdeaGenerator">
+            IdeaGenerator
+          </Link>
+        </div>
       </div>
   );
 }

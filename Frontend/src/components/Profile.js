@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import Sidebar from "./Sidebar";
 import "../stylesheets/Profile.css";
 
-function Profile() {
+function Profile({currUser}) {
   const [showSavedIdeas, setShowSavedIdeas] = useState(true);
 
   const toggleIdeas = () => {
@@ -45,7 +45,7 @@ function Profile() {
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar />
+            <Sidebar currUser={currUser}/>
           </div>
           <div className="col-md-10">
             <div className="row align-items-center g-5">
