@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import NavBar from "./NavBar";
 import CategoryCard from './CategoryCard';
 
-function Home() {
-  const [categories, setCategories] = useState([]);
+function Home({ currUser }) {
+  const [ categories, setCategories ] = useState([]);
 
   useEffect(() => {
     getCategories()
@@ -21,14 +21,13 @@ function Home() {
 
   const categoryDisplay = categories.map(category => {
     return (
-
       <div className="col-md-3 col-sm-4 col-xl-2 home_cards" key={category.name}>
-      <CategoryCard
-        self={category}
-        key={category.name}
-        name={category.name}
-        description={category.description}
-      />
+        <CategoryCard
+          self={category}
+          key={category.name}
+          name={category.name}
+          description={category.description}
+        />
       </div>
     )
   })
@@ -43,6 +42,7 @@ function Home() {
         <h2>Why this is the best website ever</h2>
         <h2>anything else we want to include</h2>
       </div>
+      <h4>Current User: {currUser.username}</h4>
       <div className="home-body">
         <h3>Idea Categories</h3>
         <div className="row justify-content-md-center">
@@ -54,16 +54,3 @@ function Home() {
 }
 
 export default Home
-
-
-
-//eric's thing
-/* // <div>
-    //   <div className="container">
-    //     <div className="row">
-    //     <h5 className="list-group-item">
-    //       <Link className='sidebar-link' to="/Category/technology">Technology</Link>
-    //     </h5>
-    //     </div>
-    //   </div>
-    // </div> */

@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import '../stylesheets/Category.css';
 import CategoryCard from './CategoryCard';
 
-function Category() {
+function Category({ currUser }) {
   const location = useLocation();
   const currCategory = location.state;
 
@@ -62,7 +62,7 @@ function Category() {
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar setState={setSelectedCategory} getResources={getResources}/>
+            <Sidebar setState={setSelectedCategory} getResources={getResources} currUser={currUser}/>
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
             <button
@@ -91,25 +91,3 @@ function Category() {
 
 export default Category;
 
-  /* <div className="row mt-4">
-    <div className="col-md-10 offset-md-2">
-      <div className="card-container" style={{ marginTop: '300px' }}>
-        {cards.map(card => (
-          <div className="card mb-3" key={card.id}>
-            <div className="card-body">
-              <div className="card-title text-center">{card.title}</div>
-              <div className="card-text text-center">{card.content}</div>
-              <div className="d-flex justify-content-between mt-2">
-                <div>
-                  <a href="#" className="btn btn-primary">Add to Collection</a>
-                </div>
-                <div>
-                  <a href="#" className="btn btn-primary">Comment</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div> */
