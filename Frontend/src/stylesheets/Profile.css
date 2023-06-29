@@ -1,3 +1,35 @@
 .btns {
     margin-bottom: 500px;
 }
+.btn-primary{
+    background-color: #FFFFFF;
+    border: 0;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    color: #111827;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    padding: .75rem 1rem;
+    text-align: center;
+    text-decoration: none #D1D5DB solid;
+    box-shadow: 0 1px 3px 0 rgba(73, 25, 35, 0.1), 0 1px 2px 0 rgba(73, 25, 35, 0.1);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin:20px  
+}
+.btn-primary:hover {
+    background-color: rgb(234, 208, 208);
+  }
+  
+.btn-primary:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  
+.btn-primary:focus-visible {
+    box-shadow: none;
+  }

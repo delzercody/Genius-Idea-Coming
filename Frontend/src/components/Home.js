@@ -37,14 +37,10 @@ function Home({ currUser, setCurrUser }) {
       <NavBar setCurrUser = {setCurrUser} />
       <div className="home-title">
         <h2>Share, Discover, and Create your Genius Ideas</h2>
-        <h2>What we're about:</h2>
-        <h2>What users are able to do</h2>
-        <h2>Why this is the best website ever</h2>
-        <h2>anything else we want to include</h2>
       </div>
-      <h4>Current User: {currUser.username}</h4>
+      <h2 className = "current-user" >Welcome back, {currUser.username}!</h2>
       <div className="home-body">
-        <h3>Idea Categories</h3>
+      <h3 className='idea-cat' >Idea Categories</h3>
         <div className="row justify-content-md-center">
           {categoryDisplay}
         </div>
