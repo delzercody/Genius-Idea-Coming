@@ -67,3 +67,5 @@ function IdeaGenerator({ currUser }) {
 }
 
 export default IdeaGenerator;
+
+// random
