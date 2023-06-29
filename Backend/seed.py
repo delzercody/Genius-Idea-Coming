@@ -12,7 +12,7 @@ def create_seed_data():
         print("Seed data already exists. Skipping creation.")
         return
     # Generate users
-    # users = []
+    users = []
     # for _ in range(10):
     #     username = fake.user_name()
     #     email = fake.email()

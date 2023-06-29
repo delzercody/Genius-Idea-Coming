@@ -273,9 +273,10 @@ class User_Idea(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='user_ideas')
     # Relationship with Prompt model (many-to-one)
     prompt = db.relationship('Prompt', back_populates='user_ideas')
+    category = association_proxy( 'prompts', 'categories' )
 
-    serialize_rules = ('-user.user_ideas', '-prompt.user_ideas')
-
+    serialize_rules = ('-user.user_ideas', '-prompt.user_ideas',  )
+#'-user_ideas.prompt'
 ############ validations for User_Idea ##############
     #checking if user and prompt exists
     @validates( 'user_id')
@@ -285,13 +286,13 @@ class User_Idea(db.Model, SerializerMixin):
             return user_id
         else: 
             raise ValueError( "User not found. ")
-    @validates( 'prompt_id')
-    def validate_prompt( self, key, prompt_id ):
-        user = Category.find( prompt_id )        
-        if user:
-            return prompt_id
-        else: 
-            raise ValueError( "Prompt not found. ")
+    # @validates( 'prompt_id')
+    # def validate_prompt( self, key, prompt_id ):
+    #     user = Category.find( prompt_id )        
+    #     if user:
+    #         return prompt_id
+    #     else: 
+    #         raise ValueError( "Prompt not found. ")
     # notes cannot exceed 10k characters
     @validates( 'notes' )
     def validate_notes( self, key, notes ):
