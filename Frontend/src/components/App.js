@@ -1,39 +1,30 @@
-import { useEffect, useState } from 'react';
-import Home from './Home'
+import { useState } from 'react'
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+
 import Login from './Login'
+import Home from './Home'
+import IdeaForm from './IdeaForm'
+import Category from './Category'
+import Profile from './Profile'
+import Ideas from './Ideas'
+import IdeaGenerator from './IdeaGenerator'
 
-function App() {
-  const [ user, setUser ] = useState(null)
-
-  useEffect(() => {
-    getUser()
-  }, []
-  );
-
-  const getUser = () => {
-    fetch('http://127.0.0.1:5000/authorized-session' )
-    .then(r => {
-      if(r.ok){
-        r.json().then(data => {
-          setUser(data)
-        })
-      } else {
-        setUser(null)
-      }
-    })
-  }
-  function updateUser(user){
-    setUser(user)
-  }
+function App () {
+  const [ currUser, setCurrUser ] = useState(null);
 
   return (
-    <div> 
-      <h1>HELLO</h1>
-      <Login 
-        updateUser = {updateUser}
-        user = {user}
-        />
-    </div>
+    <BrowserRouter>
+     <Routes>
+       <Route path="/" element={<Login setCurrUser={setCurrUser}/>} />
+       <Route path='/home' element={<Home currUser={currUser}/>}/>
+       <Route path="/IdeaForm" element={<IdeaForm currUser={currUser}/>} />
+       <Route path="/Category" element={<Category currUser={currUser}/>} />
+       <Route path="/Profile/:id" element={<Profile currUser={currUser}/>} />
+       <Route path="/Ideas/:id" element={<Ideas currUser={currUser}/>} />
+       <Route path="/Login" element={<Login currUser={currUser}/>} />
+       <Route path="/IdeaGenerator" element={<IdeaGenerator currUser={currUser}/>} />
+     </Routes>
+   </BrowserRouter>
   )
 }
 

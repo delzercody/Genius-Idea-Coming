@@ -24,9 +24,6 @@ const validationSchema = Yup.object({
 
 function IdeaForm() {
   const formik = useFormik();
-  const [ title, setTitle ] = useState(initialValues.title);
-  const [ description, setDescription ] = useState(initialValues.description);
-  const [ category, setCategory ] = useState(initialValues.category);
 
   const handleSubmit = (values) => {
     console.log("Form submitted with values:", values);
