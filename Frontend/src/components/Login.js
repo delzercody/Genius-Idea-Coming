@@ -55,9 +55,9 @@ function Login({ setCurrUser }) {
     <>
       <NavBar/>
       <section>
-        <h1>Login</h1>
         {signup ? (
           <form className='form' onSubmit={formik.handleSubmit}>
+            <h1>Signup</h1>
             <label>First Name</label>
             <input value={formik.values.first_name} onChange={formik.handleChange} type='text' name='first_name' />
             <label>Last Name</label>
@@ -78,6 +78,7 @@ function Login({ setCurrUser }) {
           </form>
         ) : (
           <form className='form' onSubmit={formik.handleSubmit}>
+            <h1>Login</h1>
             <label>Username</label>
             <input value={formik.values.username} onChange={formik.handleChange} type='text' name='username' />
             <label>Password</label>
