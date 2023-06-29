@@ -12,23 +12,23 @@ const Profile = ({ currUser, setCurrUser }) => {
     last_name: currUser.last_name,
     bio: currUser.bio,
     location: currUser.location,
-  });
+  })
 
   const toggleIdeas = () => {
     setShowSavedIdeas(!showSavedIdeas);
-  };
+  }
 
   const toggleEditingProfile = () => {
-    setEditingProfile(!editingProfile);
-  };
+    setEditingProfile(!editingProfile)
+  }
 
   const handleProfileFieldChange = (event) => {
     const { name, value } = event.target;
     setUpdatedUser((prevUser) => ({
       ...prevUser,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const updateUserProfile = () => {
     const user_id = currUser.id; // Use the ID of the current user
@@ -38,7 +38,7 @@ const Profile = ({ currUser, setCurrUser }) => {
       last_name: updatedUser.last_name,
       bio: updatedUser.bio,
       location: updatedUser.location,
-    };
+    }
 
     fetch(`http://127.0.0.1:5000/users/${user_id}`, {
       method: "PATCH",
