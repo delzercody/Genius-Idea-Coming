@@ -68,4 +68,4 @@ function IdeaGenerator({ currUser }) {
 
 export default IdeaGenerator;
 
-// unique words
+// unique words applesauce
