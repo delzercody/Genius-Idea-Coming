@@ -327,6 +327,27 @@ class PromptByID( Resource ):
         except:
             response = make_response( {"error": "prompt not found"}, 404 )
             return response
+        
+
+    def post( self, id ):
+        prompt = Prompt.find(id)
+        rq = request.get_json()
+        try:
+            new_user_idea = User_Idea(
+                notes = rq['notes'] , 
+                prompt_id = prompt.id , 
+                user_id = rq['user_id']
+            )
+            db.session.add(new_user_idea)
+            db.session.commit()
+            new_user_idea_dict = new_user_idea.to_dict()
+            response = make_response( new_user_idea_dict, 201 )
+            return response
+        except:
+            response = make_response( { "error": ["validation errors"]}, 400)
+            return response 
+
+
 api.add_resource( PromptByID, '/prompts/<int:id>' )
 
 class PromptByCategoryId (Resource):
@@ -342,22 +363,6 @@ class UserIdeas( Resource ):
         response = make_response( user_ideas, 200 )
         return response
 
-    def post( self ):
-        rq = request.get_json()
-        try:
-            new_user_idea = User_Idea(
-                notes = rq['notes'] , 
-                prompt_id = rq['prompt_id'] , 
-                user_id = rq['user_id']
-            )
-            db.session.add(new_user_idea)
-            db.session.commit()
-            new_user_idea_dict = new_user_idea.to_dict()
-            response = make_response( new_user_idea_dict, 201 )
-            return response
-        except:
-            response = make_response( { "error": ["validation errors"]}, 400)
-            return response 
 api.add_resource( UserIdeas, '/user-ideas')
 
 class UserIdeasByID( Resource ):
