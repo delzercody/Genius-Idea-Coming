@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import NavBar from './NavBar';
 
-function IdeaGenerator({ currUser }) {
+function IdeaGenerator({ currUser, setCurrUser }) {
   const [inputWord, setInputWord] = useState('');
   const [generatedIdea, setGeneratedIdea] = useState('');
   const [cards, setCards] = useState([]);
@@ -37,7 +37,7 @@ function IdeaGenerator({ currUser }) {
 
   return (
     <div>
-      <NavBar />
+      <NavBar setCurrUser = {setCurrUser}/>
       <div className="headerimage d-flex justify-content-center">
         This is a giant image
       </div>
