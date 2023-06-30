@@ -5,7 +5,7 @@ import "../stylesheets/Profile.css";
 
 const Profile = ({ currUser, setCurrUser }) => {
   const [editingProfile, setEditingProfile] = useState(false);
-  const [user, setUser] = useState(currUser);
+  // const [user, setUser] = useState(currUser);
   const [prompts, setPrompts] = useState([]);
   const [updatedUser, setUpdatedUser] = useState({
     first_name: currUser.first_name,
@@ -23,7 +23,7 @@ const Profile = ({ currUser, setCurrUser }) => {
       try {
         const response = await fetch(`http://127.0.0.1:5000/users/${id}`);
         const data = await response.json();
-        setUser(data);
+        // setUser(data);
         setPrompts(data.prompts);
       } catch (error) {
         console.error("Error:", error);
@@ -66,7 +66,7 @@ const Profile = ({ currUser, setCurrUser }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Updated user:", data)
-        setUser(data);
+        // setUser(data);
         toggleEditingProfile();
       })
       .catch((error) => {
@@ -199,7 +199,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                 <div className="text-center mt-5">
                   <img
                     className="rounded-circle"
-                    src={user.avatar}
+                    src={currUser.avatar}
                     alt="Profile Picture"
                     width="150"
                     height="150"
@@ -217,7 +217,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h2>{user.first_name}</h2>
+                      <h2>{currUser.first_name}</h2>
                     )}
                   </div>
                   <div className="col-md-12">
@@ -229,7 +229,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h2>{user.last_name}</h2>
+                      <h2>{currUser.last_name}</h2>
                     )}
                   </div>
                   <div className="col-md-12">
@@ -241,7 +241,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h3>{user.bio}</h3>
+                      <h3>{currUser.bio}</h3>
                     )}
                   </div>
                   <div className="col-md-12">
@@ -253,7 +253,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h3>{user.location}</h3>
+                      <h3>{currUser.location}</h3>
                     )}
                   </div>
                 </div>

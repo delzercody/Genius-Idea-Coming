@@ -1,0 +1,8 @@
+.prompt-card{
+    font-size: 3vmin;
+    min-width: 50vw;
+    border: inset;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 10px;
+}

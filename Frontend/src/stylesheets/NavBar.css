@@ -1,24 +1,38 @@
 .nav-bar {
-    background-color: #1c5e60;
     display: flex;
     justify-content: space-between;
-    text-align: center;
-    height: 5vh; 
-    padding: 10px;
+    padding-top: 10vmin;
+    padding-left: 10vmin;
+    padding-right: 10vmin;
+    margin-bottom: 20px;
 }
 
 .nav-bar h1{
-    font-size: 2vmin;
-}
-
-.search-input{
-    width: 25vw;
-    border-radius: 5px;
-    font-size:2vmin;
-    height:1em;
+    font-size: 9vmin;
+    text-shadow: #FC0 1px 0 10px;
 }
 
 .home-link{
     text-decoration: none;
-    color:white;
+    color:#fffffe;
+}
+
+.title{
+    color: #abd1c6;
+    margin-left: 20vmin;
+    font-size: 3vmin;
+    display: block;
+  }
+
+.user{
+    font-size: 2vmin;
+    color: #abd1c6;
+    text-shadow: #FC0 1px 0 10px;
+}
+  
+.login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding-top: 30px; */
 }

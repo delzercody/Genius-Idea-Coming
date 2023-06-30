@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../stylesheets/Sidebar.css';
 
 function Sidebar({ setState, getResources, currUser }) {
@@ -20,7 +20,7 @@ function Sidebar({ setState, getResources, currUser }) {
   const categoryDisplay = categories.map(category => {
     return (
       <button
-        className='sidebar-button'
+        className='button'
         key={category.name}
         onClick={() => {
           console.log(category)
@@ -40,20 +40,21 @@ function Sidebar({ setState, getResources, currUser }) {
             <img src={currUser.avatar} alt="Profile" className="circle-image" />
           </Link>
         </div>
-        <h5 className='profile-name'>
+        <p className='profile-name'>
           {currUser.first_name}
-        </h5>
-        <h5 className='profile-bio'>
+        </p>
+        <p className='profile-bio'>
           {currUser.bio}
-        </h5>
+        </p>
+        <p>~~</p>
         <div className='button-container'>
           {categoryDisplay}
         </div>
-        <div className="link">
+        {/* <div className="link">
           <Link to="/IdeaGenerator">
             IdeaGenerator
           </Link>
-        </div>
+        </div> */}
       </div>
   );
 }

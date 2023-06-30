@@ -1,5 +1,7 @@
 .linkbar {
-    background-color: rgb(58, 58, 58);
+    border: inset;
+    font-size: 1vmin;
+    align-items: center;
 }
 
 .sidebar {
@@ -7,11 +9,15 @@
     top: 0;
     bottom: 0;
     left: 0;
-    min-height: 100vh !important;
+    width: 12vw;
+    font-size: 1.5vmax;
     z-index: 100;
-    padding: 48px 0 0;
+    padding: 15px;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-    margin-top: 63px;
+    margin-top: 30vh;
+    margin-left: 1vw;
+    margin-bottom: 10vh;
+    text-align: center;
 }
 
 .button-container{
@@ -26,9 +32,9 @@
 
 .circle-image {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin-left: 65px;
+    width: 5vw;
+    height: 7vh;
+    /* margin-left: 65px; */
   }
   
 .profile-name {
