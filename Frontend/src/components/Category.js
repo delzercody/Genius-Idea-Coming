@@ -13,7 +13,8 @@ function Category({ currUser }) {
   const [selectedCategory, setSelectedCategory] = useState([{}]);
 
   useEffect(() => {
-    getPrompts(currCategory.id);
+    getPrompts(currCategory ? currCategory.id : 1);
+    setSelectedCategory(currCategory);
   }, [currCategory]);
 
   function getResources (id) {
@@ -74,7 +75,7 @@ function Category({ currUser }) {
             </button>
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
-            <Link to="/IdeaForm" className="btn btn-secondary">
+            <Link to="/IdeaForm" state={{ currUser, currCategory }}className="btn btn-secondary">
               Create an Idea
             </Link>
           </div>
@@ -90,4 +91,3 @@ function Category({ currUser }) {
 }
 
 export default Category;
-

@@ -1,98 +1,64 @@
-import React from "react";
-import { useRef, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
-import * as Yup from "yup";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useFormik } from "formik";
+import * as yup from "yup";
 import NavBar from "./NavBar";
 
-const initialValues = {
-  title: "",
-  description: "",
-  category: ""
-};
-
-const categories = [
-  { label: "Cooking", value: "Cooking" },
-  { label: "Technology", value: "Technology" },
-  { label: "Business", value: "Business" }
-];
-
-const validationSchema = Yup.object({
-  title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
-  category: Yup.string().required("Category is required")
-});
-
 function IdeaForm() {
-  const formik = useFormik();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currState = location.state;
+  console.log(currState)
+  console.log(currState.currCategory.id)
+  console.log(currState.currUser.id)
 
-  const handleSubmit = (values) => {
-    console.log("Form submitted with values:", values);
-  };
+  const formSchema = yup.object({
+    title: yup.string().required("Title is required"),
+    description: yup.string().required("Description is required"),
+    category_id: yup.number().required("Category is required"),
+    user_id: yup.number()
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      category_id: currState.currCategory.id,
+      user_id: currState.currUser.id
+    },
+    validationSchema: formSchema,
+    onSubmit: (values, actions) => {
+      fetch('http://127.0.0.1:5000/prompts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          actions.resetForm();
+          console.log(data)
+          navigate('/category', {state: currState});
+        })
+        .catch(error => alert(error))
+    }
+  })
 
   return (
-    <div>
+    <>
       <NavBar />
       <h2>Create an idea</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form>
-          <div className="form-group">
-            <label htmlFor="title">Title</label>
-            <Field
-              type="text"
-              id="title"
-              name="title"
-              className="form-control input-sm" // Added input-sm class
-            />
-            <ErrorMessage name="title" component="div" className="error" />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <Field
-              as="textarea"
-              id="description"
-              name="description"
-              className="form-control input-sm" // Added input-sm class
-            />
-            <ErrorMessage
-              name="description"
-              component="div"
-              className="error"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="category">Category</label>
-            <Field
-              as="select"
-              id="category"
-              name="category"
-              className="form-control input-sm" // Added input-sm class
-            >
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
-            </Field>
-            <ErrorMessage
-              name="category"
-              component="div"
-              className="error"
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </Form>
-      </Formik>
-    </div>
+      <section>
+        <form className="form" onSubmit={formik.handleSubmit}>
+          <label>title:</label>
+          <input value={formik.values.title} onChange={formik.handleChange} type='text' name='title' />
+          <label>idea:</label>
+          <input value={formik.values.description} onChange={formik.handleChange} type='text' name='description' />
+          <input type='submit' value='Create' className='button' />
+        </form>
+        
+      </section>
+    </>
   );
 }
 
