@@ -7,3 +7,14 @@
 .card-body{
     text-align: center;
 }
+
+.card-title{
+    background-color: #DBD3D8;
+    color: #223843 ;
+    text-decoration: none;
+}
+
+.card-text{
+    color: #223843 ;
+    text-decoration: none;
+}

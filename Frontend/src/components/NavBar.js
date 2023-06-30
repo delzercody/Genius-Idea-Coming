@@ -18,7 +18,7 @@ function NavBar ({setCurrUser}) {
 return (
   <div className="nav-bar">
       <Link to="/home" className="home-link">
-      <h1 className="page-title">Genius Ideas</h1>
+      <h1 className="page-title">GENIUS IDEAS</h1>
       </Link>
       <input
           className="search-input"

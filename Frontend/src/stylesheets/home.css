@@ -1,13 +1,15 @@
 .home-title {
-    background-color: #6a99ae;
+  background: rgb(170,69,69);
+  background: radial-gradient(circle, rgba(170,69,69,1) 0%, rgba(216,180,160,1) 100%);
     text-align: center;
     color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 30vmin;
+    height: 10vmin;
     width: 100vw;
-    padding: 10px;
+    padding: 50px;
+    font-family: monospace
 }
 
 .home-title > h2{
@@ -15,7 +17,7 @@
 }
 
 .home-body{
-    background-color: #4de4ba;
+    background-color: #F7F3E3;
     /* display: flex; */
     /* justify-content: space-evenly; */
     margin: 10px;
@@ -27,9 +29,21 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
 }
 
+.current-user{
+  background-color : #EFF1F3 ;
+  text-align: center;
+  font-family: monospace
 
+}
+
+.idea-cat{
+  color: #D77A61;
+  font-family: monospace;
+
+}
 
 input{
     width: 20vw
@@ -37,4 +51,6 @@ input{
 
 .home_cards {
     min-width: 500px !important;
+    font-family: monospace
+
 }
