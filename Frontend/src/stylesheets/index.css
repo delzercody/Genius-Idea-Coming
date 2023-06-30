@@ -9,21 +9,14 @@ body{
 }
 
 .button{
-  border-radius: 5px;
-  background-color: rgba(0,0,0,0);
-  border: none;
-  color: #abd1c6;
-  font-size: 2vmin;
-}
-
-.button{
   outline: 0;
   grid-gap: 8px;
   align-items: center;
-  /* background-color: #ffffff; */
-  /* color: #000; */
+  background-color: rgba(0,0,0,0);
+  color: #abd1c6;
   border: 1px solid #000;
   border-radius: 4px;
+  font-size: 2vmin;
   cursor: pointer;
   display: inline-flex;
   flex-shrink: 0;
