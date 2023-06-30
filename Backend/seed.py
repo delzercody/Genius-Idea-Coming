@@ -13,83 +13,96 @@ def create_seed_data():
         return
     # Generate users
     users = []
-    # for _ in range(10):
-    #     username = fake.user_name()
-    #     email = fake.email()
-    #     password = fake.password()
-    #     first_name = fake.first_name()
-    #     last_name = fake.last_name()
-    #     bio = fake.text(max_nb_chars=200)
-    #     user = User(username=username, email=email, password=password, first_name=first_name, last_name=last_name, bio=bio)
-    #     users.append(user)
+    for _ in range(10):
+        username = fake.user_name()
+        email = fake.unique.email()
+        password = fake.password()
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        bio = fake.text(max_nb_chars=200)
+        location = fake.city() + ', ' + fake.state()
+        avatar = fake.image_url()
+        avatar = avatar + '.png'
 
-    u1 = User(
-        username = 'meow4lyfe',
-        email = 's.kkiras@gmail.com',
-        _password_hash = 'wooooyeah',
-        bio = 'bored!',
-        first_name = 'mega',
-        last_name = 'cat',
-        location = 'catsville, NJ',
-        avatar = 'https://i1.sndcdn.com/avatars-kgdN0QdA9nrzkynk-34QCYQ-t240x240.jpg'
-    )
+        user = User(
+            username=username,
+            email=email,
+            _password_hash=password,
+            first_name=first_name,
+            last_name=last_name,
+            bio=bio,
+            location=location,
+            avatar=avatar
+        )
+        users.append(user)
 
-    u2 = User(
-        username = 'therealbrian',
-        email = 'brian.meows.don@gmail.com',
-        _password_hash = 'Marty1996',
-        bio = 'Whats up?!',
-        first_name = 'brian',
-        last_name = 'little',
-        location = 'somewhere, WY',
-        avatar = 'https://i.pinimg.com/564x/a6/77/31/a677317b6e81164b08c5d2f45a487839.jpg'
-    )
+    # u1 = User(
+    #     username = 'meow4lyfe',
+    #     email = 's.kkiras@gmail.com',
+    #     _password_hash = 'wooooyeah',
+    #     bio = 'bored!',
+    #     first_name = 'mega',
+    #     last_name = 'cat',
+    #     location = 'catsville, NJ',
+    #     avatar = 'https://i1.sndcdn.com/avatars-kgdN0QdA9nrzkynk-34QCYQ-t240x240.jpg'
+    # )
 
-    u3 = User(
-        username = 'uhohithink',
-        email = 'martyman123@gmail.com',
-        _password_hash = 'chickennuggets',
-        bio = 'Really love some chicken nuggets',
-        first_name = 'sweating',
-        last_name = 'cat',
-        location = 'meows, IDK',
-        avatar = 'https://i.pinimg.com/564x/eb/ed/75/ebed75ff55203dfcdc20be24b5a2be1a.jpg'
-    )
+    # u2 = User(
+    #     username = 'therealbrian',
+    #     email = 'brian.meows.don@gmail.com',
+    #     _password_hash = 'Marty1996',
+    #     bio = 'Whats up?!',
+    #     first_name = 'brian',
+    #     last_name = 'little',
+    #     location = 'somewhere, WY',
+    #     avatar = 'https://i.pinimg.com/564x/a6/77/31/a677317b6e81164b08c5d2f45a487839.jpg'
+    # )
 
-    u4 = User(
-        username = 'musicismylife',
-        email = 'guitar.nyoom@gmail.com',
-        _password_hash = 'Meow987',
-        bio = 'Shredding rn',
-        first_name = 'shred',
-        last_name = 'realness',
-        location = 'beachtown, CA',
-        avatar = 'https://i.pinimg.com/564x/f9/9a/7d/f99a7de62a225efab227826902c0ffc2.jpg'
-    )
+    # u3 = User(
+    #     username = 'uhohithink',
+    #     email = 'martyman123@gmail.com',
+    #     _password_hash = 'chickennuggets',
+    #     bio = 'Really love some chicken nuggets',
+    #     first_name = 'sweating',
+    #     last_name = 'cat',
+    #     location = 'meows, IDK',
+    #     avatar = 'https://i.pinimg.com/564x/eb/ed/75/ebed75ff55203dfcdc20be24b5a2be1a.jpg'
+    # )
 
-    u5 = User(
-        username = 'partyrockis',
-        email = 'ummm.actually@gmail.com',
-        _password_hash = 'password',
-        bio = 'INFP am cat genius',
-        first_name = 'glasses',
-        last_name = 'megan',
-        location = 'Houston, TX',
-        avatar = 'https://i.pinimg.com/564x/e0/8e/e1/e08ee1aaed237464cc39ab70272b1a53.jpg'
-    )
+    # u4 = User(
+    #     username = 'musicismylife',
+    #     email = 'guitar.nyoom@gmail.com',
+    #     _password_hash = 'Meow987',
+    #     bio = 'Shredding rn',
+    #     first_name = 'shred',
+    #     last_name = 'realness',
+    #     location = 'beachtown, CA',
+    #     avatar = 'https://i.pinimg.com/564x/f9/9a/7d/f99a7de62a225efab227826902c0ffc2.jpg'
+    # )
 
-    u6 = User(
-        username = 'dameunmomento',
-        email = 'debajode.lluvia@gmail.com',
-        _password_hash = 'lavidaesasi',
-        bio = 'no se', 
-        first_name = 'gato',
-        last_name = 'major',
-        location = 'miami, FL',
-        avatar = 'https://i.pinimg.com/564x/80/0c/5b/800c5b1652e5b8859ef7f9cd8c03d409.jpg'
-    )
+    # u5 = User(
+    #     username = 'partyrockis',
+    #     email = 'ummm.actually@gmail.com',
+    #     _password_hash = 'password',
+    #     bio = 'INFP am cat genius',
+    #     first_name = 'glasses',
+    #     last_name = 'megan',
+    #     location = 'Houston, TX',
+    #     avatar = 'https://i.pinimg.com/564x/e0/8e/e1/e08ee1aaed237464cc39ab70272b1a53.jpg'
+    # )
 
-    users = [u1, u2, u3, u4, u5, u6 ]
+    # u6 = User(
+    #     username = 'dameunmomento',
+    #     email = 'debajode.lluvia@gmail.com',
+    #     _password_hash = 'lavidaesasi',
+    #     bio = 'no se', 
+    #     first_name = 'gato',
+    #     last_name = 'major',
+    #     location = 'miami, FL',
+    #     avatar = 'https://i.pinimg.com/564x/80/0c/5b/800c5b1652e5b8859ef7f9cd8c03d409.jpg'
+    # )
+
+    # users = [u1, u2, u3, u4, u5, u6 ]
     db.session.add_all(users)
     db.session.commit()
 
