@@ -66,7 +66,7 @@ class User(db.Model, SerializerMixin):
     # Password of the user
     _password_hash = db.Column(db.String(15), nullable=False)
     # Email of the user (unique)
-    email = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
     # Created at timestamp
     created_at = db.Column(db.DateTime, default=datetime.utcnow, server_default=db.func.now())
     # Updated at timestamp
@@ -112,7 +112,7 @@ class User(db.Model, SerializerMixin):
     @validates('email')
     def validate_email(self, key, email):
         em = User.query.filter(User.email.like(f'%{email}%')).first()
-        if type(email) is str and email and em == None and "@" and ".com" in email:
+        if type(email) is str and email and em is None and "@" in email and ".com" in email:
             return email
         else: 
             raise ValueError( 'Must be a valid email or email has already been registered.')
