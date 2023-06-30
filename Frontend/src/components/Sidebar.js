@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import '../stylesheets/Sidebar.css';
+import { Button } from 'bootstrap';
 
 function Sidebar({ setState, getResources, currUser }) {
   const [categories, setCategories] = useState([])
@@ -47,12 +48,12 @@ function Sidebar({ setState, getResources, currUser }) {
           {currUser.bio}
         </h5>
         <div className='button-container'>
-          {categoryDisplay}
-        </div>
-        <div className="link">
-          <Link to="/IdeaGenerator">
+          <button className="sidebar-button">
+          <Link to="/IdeaGenerator" style={{ textDecoration: 'none', color: 'inherit' }}>
             IdeaGenerator
           </Link>
+          </button>
+          {categoryDisplay}
         </div>
       </div>
   );

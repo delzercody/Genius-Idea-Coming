@@ -96,7 +96,7 @@ function IdeaGenerator({ currUser, setCurrUser }) {
     <div>
       <NavBar setCurrUser={setCurrUser} />
       <div className="headerimage d-flex justify-content-center">
-        This is a giant image
+        <img className="banner" src="https://www.semi.org/sites/semi.org/files/styles/2100x600/public/2021-06/shutterstock_1886583979%20v2_0.jpg.webp?itok=TLyYnyAc"/>
       </div>
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
