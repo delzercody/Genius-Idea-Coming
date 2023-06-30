@@ -35,7 +35,7 @@ function Login({ setCurrUser, currUser }) {
     },
     validationSchema: formSchema,
     onSubmit: (values, actions) => {
-      fetch(signup ? 'http://127.0.0.1:5000/signup' : 'http://127.0.0.1:5000/login', {
+      fetch(signup ? 'http://127.0.0.1:5555/signup' : 'http://127.0.0.1:5555/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

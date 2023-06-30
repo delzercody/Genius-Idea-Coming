@@ -11,7 +11,7 @@ function Home({ currUser, setCurrUser }) {
   }, []);
 
   function getCategories() {
-    fetch("http://127.0.0.1:5000/categories")
+    fetch("http://127.0.0.1:5555/categories")
       .then(res => res.json())
       .then(res => {
         setCategories(res)

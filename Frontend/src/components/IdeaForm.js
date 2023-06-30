@@ -27,7 +27,7 @@ function IdeaForm({ currUser }) {
     },
     validationSchema: formSchema,
     onSubmit: (values, actions) => {
-      fetch('http://127.0.0.1:5000/prompts', {
+      fetch('http://127.0.0.1:5555/prompts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

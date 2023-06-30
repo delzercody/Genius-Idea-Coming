@@ -10,7 +10,7 @@ function Sidebar({ setState, getResources, currUser }) {
   }, []);
 
   function getCategories () {
-    fetch('http://127.0.0.1:5000/categories')
+    fetch('http://127.0.0.1:5555/categories')
     .then(res => res.json())
     .then(res => {
       setCategories(res)
@@ -48,13 +48,13 @@ function Sidebar({ setState, getResources, currUser }) {
         </p>
         <p>~~</p>
         <div className='button-container'>
-          {categoryDisplay}
-        </div>
-        {/* <div className="link">
+          <button className='button'>
           <Link to="/IdeaGenerator">
             IdeaGenerator
           </Link>
-        </div> */}
+          </button>
+          {categoryDisplay}
+        </div>
       </div>
   );
 }
