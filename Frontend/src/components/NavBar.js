@@ -17,7 +17,7 @@ function NavBar ({setCurrUser}) {
 
 return (
   <div className="nav-bar">
-      <Link to="/" className="home-link">
+      <Link to="/home" className="home-link">
       <h1 className="page-title">Genius Ideas</h1>
       </Link>
       <input

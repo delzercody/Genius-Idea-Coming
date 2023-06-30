@@ -194,7 +194,6 @@ function Category({ currUser, setCurrUser }) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
