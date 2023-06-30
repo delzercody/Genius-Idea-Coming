@@ -1,51 +1,70 @@
-import { useState } from "react";
-import NavBar from "./NavBar";
-import Sidebar from "./Sidebar";
-import "../stylesheets/Profile.css";
+import React, { useState } from "react"
+import NavBar from "./NavBar"
+import Sidebar from "./Sidebar"
+import "../stylesheets/Profile.css"
 
-function Profile() {
+const Profile = ({ currUser, setCurrUser }) => {
   const [showSavedIdeas, setShowSavedIdeas] = useState(true);
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [user, setUser] = useState(currUser);
+  const [updatedUser, setUpdatedUser] = useState({
+    first_name: currUser.first_name,
+    last_name: currUser.last_name,
+    bio: currUser.bio,
+    location: currUser.location,
+  })
 
   const toggleIdeas = () => {
     setShowSavedIdeas(!showSavedIdeas);
-  };
+  }
 
-  // Mock data for saved and created ideas
-  const savedIdeas = [
-    {
-      id: 1,
-      title: "Saved Idea 1",
-      description: "This is a saved idea.",
-    },
-    {
-      id: 2,
-      title: "Saved Idea 2",
-      description: "This is another saved idea.",
-    },
-  ];
+  const toggleEditingProfile = () => {
+    setEditingProfile(!editingProfile)
+  }
 
-  const createdIdeas = [
-    {
-      id: 1,
-      title: "Created Idea 1",
-      description: "This is a created idea.",
-    },
-    {
-      id: 2,
-      title: "Created Idea 2",
-      description: "This is another created idea.",
-    },
-  ];
+  const handleProfileFieldChange = (event) => {
+    const { name, value } = event.target;
+    setUpdatedUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }))
+  }
 
-  const ideasToShow = showSavedIdeas ? savedIdeas : createdIdeas;
+  const updateUserProfile = () => {
+    const user_id = currUser.id; // Use the ID of the current user
+
+    const updatedFields = {
+      first_name: updatedUser.first_name,
+      last_name: updatedUser.last_name,
+      bio: updatedUser.bio,
+      location: updatedUser.location,
+    }
+
+    fetch(`http://127.0.0.1:5000/users/${user_id}`, {
+      method: "PATCH",
+      body: JSON.stringify(updatedFields),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Updated user:", data)
+        setUser(data)
+        toggleEditingProfile()
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
+  }
 
   return (
     <div>
-      <NavBar />
+      <NavBar setCurrUser = {setCurrUser}/>
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
-            <Sidebar />
+            <Sidebar currUser={currUser} />
           </div>
           <div className="col-md-10">
             <div className="row align-items-center g-5">
@@ -53,7 +72,7 @@ function Profile() {
                 <div className="text-center mt-5">
                   <img
                     className="rounded-circle"
-                    src="https://i.redd.it/yeat-cat-i-made-v0-26w7muek6jx81.png?s=c309c167fbdf4a8bb4c6ab6d0ffc153d14421967"
+                    src={user.avatar}
                     alt="Profile Picture"
                     width="150"
                     height="150"
@@ -63,10 +82,52 @@ function Profile() {
               <div className="col-md-8">
                 <div className="row">
                   <div className="col-md-12">
-                    <h4>Yeat Cat</h4>
+                    {editingProfile ? (
+                      <input
+                        type="text"
+                        name="first_name"
+                        value={updatedUser.first_name}
+                        onChange={handleProfileFieldChange}
+                      />
+                    ) : (
+                      <h2>{user.first_name}</h2>
+                    )}
                   </div>
                   <div className="col-md-12">
-                    <p>Drip is forever</p>
+                    {editingProfile ? (
+                      <input
+                        type="text"
+                        name="last_name"
+                        value={updatedUser.last_name}
+                        onChange={handleProfileFieldChange}
+                      />
+                    ) : (
+                      <h2>{user.last_name}</h2>
+                    )}
+                  </div>
+                  <div className="col-md-12">
+                    {editingProfile ? (
+                      <input
+                        type="text"
+                        name="bio"
+                        value={updatedUser.bio}
+                        onChange={handleProfileFieldChange}
+                      />
+                    ) : (
+                      <h3>{user.bio}</h3>
+                    )}
+                  </div>
+                  <div className="col-md-12">
+                    {editingProfile ? (
+                      <input
+                        type="text"
+                        name="location"
+                        value={updatedUser.location}
+                        onChange={handleProfileFieldChange}
+                      />
+                    ) : (
+                      <h3>{user.location}</h3>
+                    )}
                   </div>
                 </div>
               </div>
@@ -77,18 +138,21 @@ function Profile() {
                   <button className="btn btn-primary" onClick={toggleIdeas}>
                     {showSavedIdeas ? "Ideas saved" : "Ideas created"}
                   </button>
-                </div>
-              </div>
-              <div className="row mt-4">
-                <div className="col-md-12">
-                  {ideasToShow.map((idea) => (
-                    <div className="card w-75 mb-3" key={idea.id}>
-                      <div className="card-body">
-                        <h5 className="card-title">{idea.title}</h5>
-                        <p className="card-text">{idea.description}</p>
-                      </div>
-                    </div>
-                  ))}
+                  {editingProfile ? (
+                    <button
+                      className="btn btn-primary"
+                      onClick={updateUserProfile}
+                    >
+                      Save Profile
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-primary"
+                      onClick={toggleEditingProfile}
+                    >
+                      Edit Profile
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -97,6 +161,6 @@ function Profile() {
       </div>
     </div>
   );
-}
+};
 
-export default Profile;
+export default Profile
