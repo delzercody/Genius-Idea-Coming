@@ -109,7 +109,7 @@ function Category({ currUser, setCurrUser }) {
 
   const promptsDisplay = prompts.map((prompt, index) => (
     <div className="row mt-4" key={prompt.name}>
-      <div className="col-md-5 offset-md-2">
+      <div className="col-md-5 offset-md-6">
         {editIndex === index ? (
           <div>
             <input
@@ -187,7 +187,7 @@ function Category({ currUser, setCurrUser }) {
             )}
           </div>
           <div className="col-md-5 d-flex justify-content-center align-items-center">
-            <Link to="/IdeaForm" state={{ currUser, currCategory }}className="btn btn-secondary">
+            <Link to="/IdeaForm" state={{ currUser, currCategory }}className="btn btn-secondary" style={{ marginBottom: '3000px', marginRight: '300px' }}>
               Create an Idea
             </Link>
             </div>

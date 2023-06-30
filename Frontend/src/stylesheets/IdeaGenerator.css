@@ -7,4 +7,9 @@
     position: absolute;
     top: -50px;
   }
+
+  .banner {
+    max-height: 500px;
+    min-width: 100%;
+  }
   

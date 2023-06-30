@@ -135,7 +135,7 @@ const Profile = ({ currUser, setCurrUser }) => {
 
   const promptsDisplay = prompts.map((prompt, index) => (
     <div className="row mt-4" key={prompt.name}>
-      <div className="col-md-5 offset-md-2">
+      <div className="col-md-5 offset-md-3">
         {editIndex === index ? (
           <div>
             <input
@@ -198,17 +198,17 @@ const Profile = ({ currUser, setCurrUser }) => {
               <div className="col-md-4">
                 <div className="text-center mt-5">
                   <img
-                    className="rounded-circle"
+                    className="rounded-circle offset-md-8"
                     src={user.avatar}
                     alt="Profile Picture"
-                    width="150"
-                    height="150"
+                    width="175"
+                    height="175"
                   />
                 </div>
               </div>
               <div className="col-md-8">
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-12 offset-md-2">
                     {editingProfile ? (
                       <input
                         type="text"
@@ -217,10 +217,10 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h2>{user.first_name}</h2>
+                      <h2>First Name: {user.first_name}</h2>
                     )}
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-12 offset-md-2">
                     {editingProfile ? (
                       <input
                         type="text"
@@ -229,10 +229,10 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h2>{user.last_name}</h2>
+                      <h2>Last Name: {user.last_name}</h2>
                     )}
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-12 offset-md-2">
                     {editingProfile ? (
                       <input
                         type="text"
@@ -241,10 +241,10 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h3>{user.bio}</h3>
+                      <h2>Bio: {user.bio}</h2>
                     )}
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-12 offset-md-2">
                     {editingProfile ? (
                       <input
                         type="text"
@@ -253,7 +253,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                         onChange={handleProfileFieldChange}
                       />
                     ) : (
-                      <h3>{user.location}</h3>
+                      <h2>Location: {user.location}</h2>
                     )}
                   </div>
                 </div>
@@ -261,10 +261,10 @@ const Profile = ({ currUser, setCurrUser }) => {
             </div>
             <div className="container mt-4">
               <div className="row justify-content-center">
-                <div className="col-md-6">
+                <div className="col-md-6 offset-md-6">
                   {editingProfile ? (
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary "
                       onClick={updateUserProfile}
                     >
                       Save Profile
