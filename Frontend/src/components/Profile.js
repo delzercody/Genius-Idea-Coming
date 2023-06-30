@@ -21,7 +21,7 @@ const Profile = ({ currUser, setCurrUser }) => {
     const id = currUser.id;
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/users/${id}`);
+        const response = await fetch(`http://127.0.0.1:5555/users/${id}`);
         const data = await response.json();
         // setUser(data);
         setPrompts(data.prompts);
@@ -56,7 +56,7 @@ const Profile = ({ currUser, setCurrUser }) => {
       location: updatedUser.location,
     };
 
-    fetch(`http://127.0.0.1:5000/users/${user_id}`, {
+    fetch(`http://127.0.0.1:5555/users/${user_id}`, {
       method: "PATCH",
       body: JSON.stringify(updatedFields),
       headers: {
@@ -76,7 +76,7 @@ const Profile = ({ currUser, setCurrUser }) => {
 
   const deletePrompt = (index) => {
     const promptId = prompts[index].id
-    fetch(`http://127.0.0.1:5000/prompts/${promptId}`, {
+    fetch(`http://127.0.0.1:5555/prompts/${promptId}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -114,7 +114,7 @@ const Profile = ({ currUser, setCurrUser }) => {
         description: editedDescription,
       };
 
-      fetch(`http://127.0.0.1:5000/prompts/${promptId}`, {
+      fetch(`http://127.0.0.1:5555/prompts/${promptId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

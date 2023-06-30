@@ -7,7 +7,7 @@ function NavBar ({setCurrUser, currUser }) {
   const navigate = useNavigate()
 
   function handleLogout() {
-      fetch('http://127.0.0.1:5000/logout').then((r) => {
+      fetch('http://127.0.0.1:5555/logout').then((r) => {
           if (r.ok) {
               setCurrUser(null);
               navigate("/")

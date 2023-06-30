@@ -45,7 +45,7 @@ function IdeaGenerator({ currUser, setCurrUser }) {
     event.preventDefault();
     try {
       console.log('Submitting form');
-      const response = await fetch('http://localhost:5000/api/generate-idea', {
+      const response = await fetch('http://localhost:5555/api/generate-idea', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ function IdeaGenerator({ currUser, setCurrUser }) {
     const categoryNumber = selectedCard.category
   
     try {
-      const response = await fetch('http://127.0.0.1:5000/prompts', {
+      const response = await fetch('http://127.0.0.1:5555/prompts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,9 +95,6 @@ function IdeaGenerator({ currUser, setCurrUser }) {
   return (
     <div>
       <NavBar setCurrUser={setCurrUser} />
-      <div className="headerimage d-flex justify-content-center">
-        <img className="banner" src="https://www.semi.org/sites/semi.org/files/styles/2100x600/public/2021-06/shutterstock_1886583979%20v2_0.jpg.webp?itok=TLyYnyAc"/>
-      </div>
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
@@ -107,7 +104,7 @@ function IdeaGenerator({ currUser, setCurrUser }) {
         <div className="d-flex justify-content-center">
           <form onSubmit={handleSubmit}>
             <input type="text" value={inputWord} onChange={handleInputChange} />
-            <button type="submit">Generate Idea</button>
+            <button className='button' type="submit">Generate Idea</button>
           </form>
         </div>
         {cards.map((card, index) => (

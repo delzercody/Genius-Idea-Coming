@@ -43,7 +43,7 @@ function Category({ currUser, setCurrUser }) {
   const deletePrompt = (index) => {
     const promptId = prompts[index].id;
   
-    fetch(`http://127.0.0.1:5000/prompts/${promptId}`, {
+    fetch(`http://127.0.0.1:5555/prompts/${promptId}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
@@ -79,7 +79,7 @@ function Category({ currUser, setCurrUser }) {
         description: editedDescription,
       };
 
-      fetch(`http://127.0.0.1:5000/prompts/${promptId}`, {
+      fetch(`http://127.0.0.1:5555/prompts/${promptId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ function Category({ currUser, setCurrUser }) {
   }
 
   const getPrompts = (id) => {
-    fetch(`http://127.0.0.1:5000/promptbycategory/${id}`)
+    fetch(`http://127.0.0.1:5555/promptbycategory/${id}`)
       .then((res) => res.json())
       .then((res) => {
         setPrompts(res)
