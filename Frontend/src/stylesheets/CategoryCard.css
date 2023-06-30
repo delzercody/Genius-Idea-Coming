@@ -1,20 +1,9 @@
-.card{
-    height: 25vh;
-    width: 15vw;
-    min-width: 300px
-}
-
-.card-body{
+.category-card{
+    text-decoration: none;
     text-align: center;
-}
-
-.card-title{
-    background-color: #DBD3D8;
-    color: #223843 ;
-    text-decoration: none;
-}
-
-.card-text{
-    color: #223843 ;
-    text-decoration: none;
+    font-size: 10vmin;
+    background-color: rgba(0,0,0,0);
+    /* border: inset; */
+    border-radius: 10px;
+    padding: 5px;
 }

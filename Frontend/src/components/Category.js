@@ -4,6 +4,7 @@ import NavBar from './NavBar';
 import { Link, useLocation } from 'react-router-dom';
 import '../stylesheets/Category.css';
 import CategoryCard from './CategoryCard';
+import PromptCard from './PromptCard'
 
 function Category({ currUser, setCurrUser }) {
   const location = useLocation();
@@ -109,7 +110,7 @@ function Category({ currUser, setCurrUser }) {
 
   const promptsDisplay = prompts.map((prompt, index) => (
     <div className="row mt-4" key={prompt.name}>
-      <div className="col-md-5 offset-md-6">
+      <div className="col-md-5 offset-md-2">
         {editIndex === index ? (
           <div>
             <input
@@ -122,13 +123,13 @@ function Category({ currUser, setCurrUser }) {
               onChange={(e) => setEditedDescription(e.target.value)}
             ></textarea>
             <div>
-              <button type="button" onClick={saveEdit}>Save</button>
-              <button type="button" onClick={cancelEdit}>Cancel</button>
+              <button type="button" className='button' onClick={saveEdit}>Save</button>
+              <button type="button"className='button' onClick={cancelEdit}>Cancel</button>
             </div>
           </div>
         ) : (
           <div>
-            <CategoryCard
+            <PromptCard
               key={prompt.name}
               className="category-prompt"
               name={prompt.title}
@@ -139,14 +140,14 @@ function Category({ currUser, setCurrUser }) {
               <div>
                 <button
                   type="button"
-                  className="btn btn-primary btn-sm"
+                  className="button"
                   onClick={() => editPrompt(index, prompt.content)}
                 >
                   Edit
                 </button>
                 <button
                   type="button"
-                  className="btn btn-danger btn-sm"
+                  className="button"
                   onClick={() => deletePrompt(index)}
                 >
                   Delete
@@ -161,39 +162,34 @@ function Category({ currUser, setCurrUser }) {
 
   return (
     <div>
-      <NavBar setCurrUser = {setCurrUser} />
-      <div className="headerimage d-flex justify-content-center">
-        This is a giant image
-      </div>
+      <NavBar setCurrUser = {setCurrUser} currUser={currUser}/>
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
             <Sidebar setState={setSelectedCategory} getResources={getResources} currUser={currUser} />
           </div>
-          <div className="col-md-5">
-            <div className="d-flex justify-content-center align-items-center">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={generateIdea}
-              >
-                Generate an idea
-              </button>
-            </div>
-            {promptsDisplay.length > 0 && (
-              <div className="container" style={{ marginTop: '300px', justifyContent: 'center' }}>
-                {promptsDisplay}
-              </div>
-            )}
-          </div>
-          <div className="col-md-5 d-flex justify-content-center align-items-center">
-            <Link to="/IdeaForm" state={{ currUser, currCategory }}className="btn btn-secondary" style={{ marginBottom: '3000px', marginRight: '300px' }}>
-              Create an Idea
-            </Link>
-            </div>
-          </div>
         </div>
       </div>
+      <div className='button-container'>
+        <button
+          type="button"
+          className="button"
+          onClick={generateIdea}
+        >       
+        Generate an idea
+        </button>
+        <button className='button'>
+          <Link to="/IdeaForm" state={{ currUser, currCategory }}>
+            Create an Idea
+          </Link>
+        </button>
+      </div>
+      {promptsDisplay.length > 0 && (
+        <div className="prompts-container">
+          {promptsDisplay}
+        </div>
+      )}
+    </div>
   );
 }
 

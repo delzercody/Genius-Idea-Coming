@@ -1,28 +1,9 @@
-/* .col-md-2 {
-    background-color: gray
-} */
-
-/* .custom-height {
-    height: 2000px;
-} */
-
-.card-display{
+.prompts-container{
     display:flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: #F7F3E3;
-
+    margin-left: 15vw;
 }
 
-.btn-secondary{
-    position:relative; top: 200px;
+.button-container{
+    padding: 5px;
 }
-
-body {
-    background-color: rgb(210, 175, 145);
-}
-
-/* .card{
-    margin-top: 100px;
-} */

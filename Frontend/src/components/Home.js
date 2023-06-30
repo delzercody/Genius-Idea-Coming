@@ -21,29 +21,21 @@ function Home({ currUser, setCurrUser }) {
 
   const categoryDisplay = categories.map(category => {
     return (
-      <div className="col-md-3 col-sm-4 col-xl-2 home_cards" key={category.name}>
         <CategoryCard
+          className='category-card'
           self={category}
           key={category.name}
           name={category.name}
           description={category.description}
         />
-      </div>
     )
   })
 
   return (
     <>
-      <NavBar setCurrUser = {setCurrUser} />
-      <div className="home-title">
-        <h2>Share, Discover, and Create your Genius Ideas</h2>
-      </div>
-      <h2 className = "current-user" >Welcome back, {currUser.username}!</h2>
-      <div className="home-body">
-      <h3 className='idea-cat' >Idea Categories</h3>
-        <div className="row justify-content-md-center">
-          {categoryDisplay}
-        </div>
+      <NavBar setCurrUser = {setCurrUser} currUser={currUser}/>
+      <div className='card-container'>
+        {categoryDisplay}
       </div>
     </>
   )

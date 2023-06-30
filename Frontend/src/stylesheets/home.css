@@ -1,56 +1,7 @@
-.home-title {
-  background: rgb(170,69,69);
-  background: radial-gradient(circle, rgba(170,69,69,1) 0%, rgba(216,180,160,1) 100%);
-    text-align: center;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 10vmin;
-    width: 100vw;
-    padding: 50px;
-    font-family: monospace
-}
-
-.home-title > h2{
-  font-size: 3vmin;  
-}
-
-.home-body{
-    background-color: #F7F3E3;
-    /* display: flex; */
-    /* justify-content: space-evenly; */
-    margin: 10px;
-    padding: 10px;
-}
-
-.category-container {
-  background-color: #9fc0cf;
+.card-container{
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
-
-}
-
-.current-user{
-  background-color : #EFF1F3 ;
-  text-align: center;
-  font-family: monospace
-
-}
-
-.idea-cat{
-  color: #D77A61;
-  font-family: monospace;
-
-}
-
-input{
-    width: 20vw
-}
-
-.home_cards {
-    min-width: 500px !important;
-    font-family: monospace
-
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 80px;
 }

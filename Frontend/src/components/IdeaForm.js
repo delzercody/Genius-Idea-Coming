@@ -1,11 +1,9 @@
-import '../stylesheets/IdeaForm.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFormik } from "formik";
 import * as yup from "yup";
 import NavBar from "./NavBar";
 
-
-function IdeaForm() {
+function IdeaForm({ currUser }) {
   const navigate = useNavigate();
   const location = useLocation();
   const currState = location.state;
@@ -49,16 +47,15 @@ function IdeaForm() {
   return (
     <>
       <NavBar />
-      <h2 className='create'>Create an idea</h2>
+      <h2 className='text-align'>new idea</h2>
       <section>
         <form className="form" onSubmit={formik.handleSubmit}>
           <label>title:</label>
           <input value={formik.values.title} onChange={formik.handleChange} type='text' name='title' />
           <label>idea:</label>
-          <input value={formik.values.description} onChange={formik.handleChange} type='text' name='description' />
-          <input type='submit' value='Create' className='form-button' />
+          <textarea value={formik.values.description} onChange={formik.handleChange} type='text' name='description' />
+          <input type='submit' value='Create' className='button' />
         </form>
-        
       </section>
     </>
   );

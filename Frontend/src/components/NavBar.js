@@ -1,8 +1,8 @@
-import "../stylesheets/NavBar.css"
+import "../stylesheets/navbar.css"
 import {Link, useNavigate } from 'react-router-dom'
 import Login from "./Login";
 
-function NavBar ({setCurrUser}) {
+function NavBar ({setCurrUser, currUser }) {
 
   const navigate = useNavigate()
 
@@ -17,17 +17,22 @@ function NavBar ({setCurrUser}) {
 
 return (
   <div className="nav-bar">
-      <Link to="/home" className="home-link">
-      <h1 className="page-title">GENIUS IDEAS</h1>
-      </Link>
-      <input
-          className="search-input"
-          placeholder="Search"
-          type="text">
-      </input>
-          <button onClick = {handleLogout} className="logout-button">
-              Log out
-          </button>
+    <div>
+        <Link to="/home" className="home-link">
+            <h1 className="page-title">Genius Ideas 💡 </h1>
+        </Link>
+        <h2 className='title'>share, discover, and create your genius ideas</h2>
+    </div>
+    {currUser ? (
+        <div className="login-container">
+            <h2 className='user'>hello {currUser.first_name}!</h2>
+            <button className='button' onClick = {handleLogout}>
+                log out
+            </button>
+        </div>
+    ) : (
+        null
+    )}
   </div>
 )
 };
