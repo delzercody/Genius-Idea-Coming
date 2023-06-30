@@ -1,34 +1,50 @@
-import React, { useState } from "react"
-import NavBar from "./NavBar"
-import Sidebar from "./Sidebar"
-import "../stylesheets/Profile.css"
+import React, { useState, useEffect } from "react";
+import NavBar from "./NavBar";
+import Sidebar from "./Sidebar";
+import "../stylesheets/Profile.css";
 
 const Profile = ({ currUser, setCurrUser }) => {
-  const [showSavedIdeas, setShowSavedIdeas] = useState(true);
   const [editingProfile, setEditingProfile] = useState(false);
   const [user, setUser] = useState(currUser);
+  const [prompts, setPrompts] = useState([]);
   const [updatedUser, setUpdatedUser] = useState({
     first_name: currUser.first_name,
     last_name: currUser.last_name,
     bio: currUser.bio,
     location: currUser.location,
-  })
+  });
+  const [editIndex, setEditIndex] = useState(null);
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedDescription, setEditedDescription] = useState("");
 
-  const toggleIdeas = () => {
-    setShowSavedIdeas(!showSavedIdeas);
-  }
+  useEffect(() => {
+    const id = currUser.id;
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/users/${id}`);
+        const data = await response.json();
+        setUser(data);
+        setPrompts(data.prompts);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchUser();
+  }, [currUser.id]);
 
   const toggleEditingProfile = () => {
-    setEditingProfile(!editingProfile)
-  }
+    setEditingProfile(!editingProfile);
+  };
 
   const handleProfileFieldChange = (event) => {
     const { name, value } = event.target;
     setUpdatedUser((prevUser) => ({
       ...prevUser,
       [name]: value,
-    }))
-  }
+    }));
+  };
+
 
   const updateUserProfile = () => {
     const user_id = currUser.id; // Use the ID of the current user
@@ -38,7 +54,7 @@ const Profile = ({ currUser, setCurrUser }) => {
       last_name: updatedUser.last_name,
       bio: updatedUser.bio,
       location: updatedUser.location,
-    }
+    };
 
     fetch(`http://127.0.0.1:5000/users/${user_id}`, {
       method: "PATCH",
@@ -50,17 +66,128 @@ const Profile = ({ currUser, setCurrUser }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Updated user:", data)
-        setUser(data)
-        toggleEditingProfile()
+        setUser(data);
+        toggleEditingProfile();
       })
       .catch((error) => {
         console.error("Error:", error)
-      })
+      });
   }
+
+  const deletePrompt = (index) => {
+    const promptId = prompts[index].id
+    fetch(`http://127.0.0.1:5000/prompts/${promptId}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const updatedPrompts = prompts.filter((prompt) => prompt.id !== promptId);
+        setPrompts(updatedPrompts);
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      });
+  }
+  
+
+  const editPrompt = (index, newDescription) => {
+    if (prompts[index].user_id === currUser.id) {
+      setEditIndex(index);
+      setEditedTitle(prompts[index].title);
+      setEditedDescription(prompts[index].description);
+    }
+  };
+
+  const saveEdit = () => {
+    if (editIndex !== null) {
+      const updatedPrompts = [...prompts];
+      updatedPrompts[editIndex].title = editedTitle;
+      updatedPrompts[editIndex].description = editedDescription;
+      setPrompts(updatedPrompts);
+      setEditIndex(null);
+      setEditedTitle("");
+      setEditedDescription("");
+
+      const promptId = prompts[editIndex].id;
+      const updatedPrompt = {
+        title: editedTitle,
+        description: editedDescription,
+      };
+
+      fetch(`http://127.0.0.1:5000/prompts/${promptId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedPrompt),
+      })
+        .then((res) => res.json())
+        .then((res) => {})
+        .catch((error) => {});
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditIndex(null);
+    setEditedTitle("");
+    setEditedDescription("");
+  };
+
+  const promptsDisplay = prompts.map((prompt, index) => (
+    <div className="row mt-4" key={prompt.name}>
+      <div className="col-md-5 offset-md-2">
+        {editIndex === index ? (
+          <div>
+            <input
+              type="text"
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+            />
+            <textarea
+              value={editedDescription}
+              onChange={(e) => setEditedDescription(e.target.value)}
+            ></textarea>
+            <div>
+              <button type="button" onClick={saveEdit}>Save</button>
+              <button type="button" onClick={cancelEdit}>Cancel</button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{prompt.title}</h5>
+                <p className="card-text">{prompt.description}</p>
+                {prompt.user_id === currUser.id && (
+                  <div>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={() => editPrompt(index, prompt.content)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => deletePrompt(index)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  ));
+  
 
   return (
     <div>
-      <NavBar setCurrUser = {setCurrUser}/>
+      <NavBar setCurrUser={setCurrUser} />
       <div className="container">
         <div className="row justify-content-left align-items-stretch">
           <div className="col-md-2 custom-height sidebar-wrapper">
@@ -135,9 +262,6 @@ const Profile = ({ currUser, setCurrUser }) => {
             <div className="container mt-4">
               <div className="row justify-content-center">
                 <div className="col-md-6">
-                  <button className="btn btn-primary" onClick={toggleIdeas}>
-                    {showSavedIdeas ? "Ideas saved" : "Ideas created"}
-                  </button>
                   {editingProfile ? (
                     <button
                       className="btn btn-primary"
@@ -156,6 +280,7 @@ const Profile = ({ currUser, setCurrUser }) => {
                 </div>
               </div>
             </div>
+            {promptsDisplay}
           </div>
         </div>
       </div>
@@ -163,4 +288,4 @@ const Profile = ({ currUser, setCurrUser }) => {
   );
 };
 
-export default Profile
+export default Profile;
